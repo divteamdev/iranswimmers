@@ -1,15 +1,11 @@
 import {defineStore} from 'pinia';
-
+import { apiRequest } from './apiUtils';
 
 export const useApiStore = defineStore('apiStore', () => {
     const config = useRuntimeConfig();
 
     const BASE_URL: Ref<string> = ref(config.public.baseURL);
     const API_PATH: Ref<string> = ref(config.public.apiPath);
-
-    const shopListData = ref(null);
-    const shopListLoading = ref(false);
-    const shopListError = ref(null);
 
     const endpoints = {
         shop: {
@@ -59,36 +55,9 @@ export const useApiStore = defineStore('apiStore', () => {
         },
     }
 
-    // Function to test the shop list API
-    const testShopListApi = async () => {
-        shopListLoading.value = true;
-        shopListError.value = null;
-
-        try {
-            const {data, error} = await useFetch(BASE_URL.value + endpoints.shop.category.list());
-
-            if (error.value) {
-                shopListError.value = error.value;
-                console.error('API Error:', error.value);
-            } else {
-                shopListData.value = data.value;
-                console.log('API Response:', data.value);
-            }
-        } catch (err) {
-            shopListError.value = err;
-            console.error('API Exception:', err);
-        } finally {
-            shopListLoading.value = false;
-        }
-    };
-
     return {
         endpoints,
         BASE_URL,
         API_PATH,
-        shopListData,
-        shopListLoading,
-        shopListError,
-        testShopListApi
     }
 });
