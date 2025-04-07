@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+    --font-fa-num: 'yekan-fa';
+    --font-en-num: 'yekan-en'
+}
+
+@layer base {
+
+    .heading-1 {
+        @apply font-fa-num text-4xl font-bold leading-tight;
+    }
+    .heading-2 {
+        @apply font-fa-num text-3xl font-bold leading-tight;
+    }
+    .heading-3 {
+        @apply font-fa-num text-2xl font-bold leading-tight;
+    }
+    .heading-4 {
+        @apply font-fa-num text-xl font-bold leading-tight;
+    }
+
+    .body-1 {
+        @apply font-fa-num text-base leading-normal;
+    }
+    .body-2 {
+        @apply font-fa-num text-sm leading-normal;
+    }
+    .body-3 {
+        @apply font-fa-num text-xs leading-normal;
+    }
+
+    .caption-1 {
+        @apply font-fa-num text-sm font-bold leading-normal;
+    }
+    .caption-2 {
+        @apply font-fa-num text-xs font-bold leading-normal;
+    }
+}
