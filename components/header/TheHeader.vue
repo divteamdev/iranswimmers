@@ -1,5 +1,6 @@
 <script setup lang="ts">
 
+import {SelectIcon} from "reka-ui";
 </script>
 
 <template>
@@ -12,7 +13,7 @@
       <div class="logo">
         <NuxtLink to="/" class="flex items-center justify-center gap-2">
           <img src="/images/logo.png" alt="Logo" class="w-16 h-16"/>
-          <span class="text-primary font-bold">
+          <span class="text-primary font-bold font-fa-num">
           ایران سوییمرز
           </span>
         </NuxtLink>
@@ -28,7 +29,7 @@
           ورود / ثبت نام
         </Button>
         <Button variant="ghost" size="icon-lg">
-          <icon name="heroicons:shopping-cart"/>
+          <Icon name="heroicons:shopping-cart"/>
         </Button>
       </div>
     </div>
@@ -37,7 +38,7 @@
       <HeaderMenu/>
       <Button variant="ghost" size="lg">
         <Icon name="hugeicons:customer-support" class="text-secondary text-2xl"/>
-        <span dir="ltr">
+        <span dir="ltr" class="text-lg font-normal">
                   0921 234 4566
         </span>
       </Button>
