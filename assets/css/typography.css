@@ -31,9 +31,17 @@
     }
 
     .caption-1 {
-        @apply font-fa-num text-sm font-bold leading-normal;
+        @apply font-fa-num text-sm font-medium leading-normal;
     }
     .caption-2 {
         @apply font-fa-num text-xs font-bold leading-normal;
+    }
+
+    .button-1{
+        @apply font-fa-num text-sm font-medium leading-none;
+    }
+
+    .button-3{
+        @apply font-fa-num text-xs font-medium leading-none;
     }
 }
