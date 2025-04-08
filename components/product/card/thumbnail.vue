@@ -56,7 +56,7 @@ const hasSecondaryImage = computed(() => Boolean(secondaryThumbnailSrc.value));
 </script>
 
 <template>
-  <div :class="['bg-gray-100 overflow-hidden relative group', aspectRatioClasses]">
+  <div :class="['bg-card overflow-hidden relative group rounded-lg', aspectRatioClasses]">
     <!-- Primary image with NuxtImg -->
     <NuxtImg
         v-if="thumbnailSrc"
@@ -83,7 +83,7 @@ const hasSecondaryImage = computed(() => Boolean(secondaryThumbnailSrc.value));
     />
 
     <!-- Fallback if no image is available -->
-    <div v-if="!thumbnailSrc" class="w-full h-full flex items-center justify-center text-gray-400">
+    <div v-if="!thumbnailSrc" class="w-full h-full flex items-center justify-center text-muted-foreground bg-background">
       No image
     </div>
 
