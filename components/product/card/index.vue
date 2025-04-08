@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import {Card, CardFooter, CardTitle} from "~/components/ui/card";
-import {formatPrice} from "../../../helpers/priceUtils";
+import {formatPrice} from "~/helpers/priceUtils";
 
 const props = defineProps({
   product: {
@@ -16,16 +16,22 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  variant: {
+    type: String,
+    default: 'default',
+  },
 })
 
 </script>
 
 <template>
-  <Card dir="rtl" class="justify-between min-h-[360px]" :to="`/product/${product.slug}`">
+  <Card dir="rtl" class="justify-between min-h-[360px]"
+        :class="variant === 'secondary' ? 'bg-secondary' : ''"
+        :to="`/product/${product.slug}`">
     <CardHeader>
       <ProductCardThumbnail :primaryImage="product.thumbnail" :secondaryImage="product.thumbnail_alt"/>
 
-      <CardTitle tag="h4" class="heading-5">
+      <CardTitle tag="h4" class="heading-5" :class="variant === 'secondary' ? 'text-secondary-foreground' : ''">
         {{ product.name }}
       </CardTitle>
 
@@ -34,8 +40,10 @@ const props = defineProps({
     <CardFooter>
 
       <div class="flex items-center gap-1">
-        <span class="font-fa-num body-1 text-foreground">{{ formatPrice(product.price) }}</span>
-        <span class="text-xs font-fa-num text-muted-foreground">تومان</span>
+        <span class="font-fa-num body-1 "
+              :class="variant === 'secondary' ? 'text-secondary-foreground' : 'text-foreground'">{{formatPrice(product.price) }}</span>
+        <span class="text-xs font-fa-num"
+              :class="variant === 'secondary' ? 'text-secondary-foreground/80' : 'text-muted-foreground'">تومان</span>
       </div>
 
       <Button
