@@ -53,7 +53,7 @@ const categories = [
 
 <template>
   <div>
-    <ul class="flex flex-row w-full justify-between">
+    <ul class="flex flex-row w-full justify-between flex-wrap">
       <HomeCategoriesItem
           v-for="(category, index) in categories"
           :key="index"
