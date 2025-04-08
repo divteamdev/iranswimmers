@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia';
-import { apiRequest } from './apiUtils';
+import {apiRequest} from './apiUtils';
 
 export const useApiStore = defineStore('apiStore', () => {
     const config = useRuntimeConfig();
@@ -33,6 +33,9 @@ export const useApiStore = defineStore('apiStore', () => {
                 add: (productSlug: string) => `${API_PATH.value}product/${productSlug}/comment/create`,
                 list: (productSlug: string) => `${API_PATH.value}product/${productSlug}/comments`,
             }
+        },
+        home: {
+            index: () => `${API_PATH.value}index`,
         },
         auth: {
             otp: {

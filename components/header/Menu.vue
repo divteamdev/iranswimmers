@@ -30,7 +30,7 @@ const menuItems = [
 
 <template>
   <div class="flex items-center gap-4">
-    <Button variant="secondary" size="lg" class="font-fa-num">
+    <Button variant="secondary" size="lg" class="font-fa-num" to="/shop">
       <Icon name="hugeicons:menu-01" class="text-lg"/>
       دسته‌بندی محصولات
     </Button>
