@@ -7,6 +7,6 @@ const apiStore = useApiStore();
 </script>
 
 <template>
-  <HomeSlider class="irsm-container mb-12"/>
-  <HomeCategories class="irsm-container mb-12"/>
+  <HomeSlider class="irsm-container mb-20"/>
+  <HomeCategories class="irsm-container mb-20"/>
 </template>
