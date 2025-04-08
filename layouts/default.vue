@@ -4,7 +4,7 @@
 
 <template>
   <Header/>
-  <main class="irsm-container">
+  <main class="py-8">
     <NuxtPage/>
   </main>
 </template>
