@@ -13,7 +13,7 @@ defineProps({
 const emit = defineEmits(['navigate'])
 
 // Emit the index to navigate to when a dot is clicked
-function handleDotClick(index) {
+function handleDotClick(index: number) {
   emit('navigate', index)
 }
 </script>
