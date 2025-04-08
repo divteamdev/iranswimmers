@@ -4,9 +4,9 @@
 
 :root {
     --background: oklch(1 0 0);
-    --foreground: oklch(0.13 0.028 261.692);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.13 0.028 261.692);
+    --foreground: oklch(0.248 0 89.876);
+    --card: oklch(0.96 0 89.88);
+    --card-foreground: oklch(0.248 0 89.876);
     --popover: oklch(1 0 0);
     --popover-foreground: oklch(0.13 0.028 261.692);
     --primary: oklch(0.61 0.1856 242.18);
@@ -42,7 +42,7 @@
     --background: oklch(0.13 0.028 261.692);
     --foreground: oklch(0.985 0.002 247.839);
     --card: oklch(0.13 0.028 261.692);
-    --card-foreground: oklch(0.985 0.002 247.839);
+    --card-foreground: oklch(1 0 89);
     --popover: oklch(0.13 0.028 261.692);
     --popover-foreground: oklch(0.985 0.002 247.839);
     --primary: oklch(0.985 0.002 247.839);
@@ -119,5 +119,25 @@
 
     body {
         @apply bg-background text-foreground;
+    }
+
+    .irsm-container {
+        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-0 xl:max-w-[80rem] 2xl:max-w-[96rem];
+    }
+
+    .products-grid {
+        @apply grid gap-4 lg:gap-6 xl:gap-8;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+
+    @media (min-width: 1024px) {
+        .products-grid {
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        }
+    }
+    @media (min-width: 1536px) {
+        .products-grid {
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        }
     }
 }
