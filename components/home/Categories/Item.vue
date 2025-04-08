@@ -22,7 +22,7 @@ defineProps({
 <template>
   <li class="h-auto max-w-min min-w-[23%] md:min-w-[10%] lg:min-w-max border-b border-b-transparent hover:border-b-primary transition-colors duration-300 flex-1 pb-4 ">
     <nuxt-link :to="link" class="flex flex-col items-center text-center gap-2 h-full w-full">
-      <div class="category-bg rounded-xl aspect-square p-2 lg:p-3">
+      <div class="category-bg rounded-xl aspect-square p-2 lg:p-3 hover:bg-primary/10">
         <component
             :is="imageUrl.endsWith('.svg') ? 'div' : 'img'"
             :src="!imageUrl.endsWith('.svg') ? imageUrl : undefined"
