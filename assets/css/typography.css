@@ -17,16 +17,22 @@
         @apply font-fa-num text-2xl font-bold leading-tight;
     }
     .heading-4 {
-        @apply font-fa-num text-xl font-bold leading-tight;
+        @apply font-fa-num text-xl font-medium leading-tight;
+    }
+    .heading-5 {
+        @apply font-fa-num text-base font-medium leading-normal;
     }
 
     .body-1 {
-        @apply font-fa-num text-base leading-normal;
+        @apply font-fa-num text-lg leading-normal;
     }
     .body-2 {
-        @apply font-fa-num text-sm leading-normal;
+        @apply font-fa-num text-base leading-normal;
     }
     .body-3 {
+        @apply font-fa-num text-sm leading-normal;
+    }
+    .body-4 {
         @apply font-fa-num text-xs leading-normal;
     }
 
