@@ -49,13 +49,14 @@ function goToSlide(index: number) {
         class="relative w-full"
         :opts="{
         align: 'center',
+        direction: 'rtl',
         loop: true,
       }"
         :plugins="[autoplayPlugin]"
         @init-api="handleInitApi">
 
-      <CarouselContent class="-ml-4">
-        <CarouselItem v-for="(_, index) in totalSlides" :key="index" class="pl-4">
+      <CarouselContent class="-mr-4" >
+        <CarouselItem v-for="(_, index) in totalSlides" :key="index" class="pr-4">
           <CardContent class="flex items-center justify-center px-0 rounded-4xl overflow-hidden">
             <img :src="`/images/hero-banners/banner-${index + 1}.webp`" alt="Banner image"
                  class="h-full w-full object-cover"/>
@@ -63,11 +64,13 @@ function goToSlide(index: number) {
         </CarouselItem>
       </CarouselContent>
     </Carousel>
+
     <CarouselDots
         class="mt-4"
         :current-index="currentIndex"
         :total-slides="totalSlides"
         @navigate="goToSlide"
     />
+
   </div>
 </template>
