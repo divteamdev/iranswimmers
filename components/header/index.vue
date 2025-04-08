@@ -25,7 +25,7 @@
           ورود / ثبت نام
         </Button>
         <Button variant="ghost" size="icon-lg">
-          <Icon name="heroicons:shopping-cart" />
+          <Icon name="heroicons:shopping-cart" class="text-2xl" />
         </Button>
       </div>
     </div>
