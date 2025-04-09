@@ -35,7 +35,7 @@ const props = defineProps({
     <CarouselContent class="-ml-4 h-full">
       <CarouselItem v-for="(product, index) in products"
                     :key="index"
-                    :class="carouselItemClass">
+                    :class="carouselItemClass + ' max-w-[300px] min-w-[220px] w-auto'">
         <ProductCard
             :variant="productCardVariant"
             :product="product" :index="index" class="h-full"/>
