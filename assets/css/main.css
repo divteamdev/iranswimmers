@@ -125,8 +125,13 @@
         @apply bg-background text-foreground;
     }
 
+    .container-padding{
+        @apply px-4 sm:px-6 lg:px-8 xl:px-0;
+    }
+
     .irsm-container {
-        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-0 xl:max-w-[80rem] 2xl:max-w-[96rem];
+        @apply px-4 sm:px-6 lg:px-8 xl:px-0;
+        @apply max-w-7xl mx-auto xl:max-w-[80rem] 2xl:max-w-[96rem];
     }
 
     .products-grid {
