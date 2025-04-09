@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils'
+import {cn} from '@/lib/utils'
 
 const socials = [
   {
@@ -45,23 +45,28 @@ const getSocialButtonClasses = (social) => {
       ارتباط با ما
     </h6>
     <div class="flex flex-col items-center md:items-end gap-2 mb-4 justify-center" dir="ltr">
-      <Button size="sm" class="w-fit" variant="ghost">
+      <Button size="sm" class="w-fit" variant="ghost" href="tel:+982188881426" as="a">
         <span class="caption-2">021</span>
         <span class="text-primary body-1">
           88881426
         </span>
       </Button>
 
-      <Button size="sm" class="w-fit" variant="ghost">
+      <Button as="a" size="sm" class="w-fit" variant="ghost" href="mailto:contact@iranswimmers.com">
         <span class="text-foreground body-2">
           contact@iranswimmers.com
         </span>
       </Button>
     </div>
 
-    <p class="body-2 bg-primary/10 text-primary text-center py-2 mb-4 md:text-start md:px-4">
-      تهران، میرداماد، جنب موزه دفینه، بازار بزرگ میرداماد، طبقه همکف، واحد 32
-    </p>
+    <a class="body-2 bg-primary/10 text-primary text-center py-2 mb-4 md:text-start md:px-4 rounded-lg"
+       target="_blank" rel="noopener noreferrer"
+       href="https://www.google.com/maps/place/iranswimmers/@35.762189,51.4122559,17z/data=!3m1!4b1!4m6!3m5!1s0x3f8e07c25f8a70e7:0xd1d2cae8e8cbcbc8!8m2!3d35.7621847!4d51.4148308!16s%2Fg%2F11sttd2rd4?entry=ttu&g_ep=EgoyMDI1MDQwOC4wIKXMDSoASAFQAw%3D%3D"
+    >
+      <p>
+        تهران، میرداماد، جنب موزه دفینه، بازار بزرگ میرداماد، طبقه همکف، واحد 32
+      </p>
+    </a>
 
     <div class="flex gap-2 justify-center w-full md:justify-start">
       <div v-for="social in socials" :key="social.name">
