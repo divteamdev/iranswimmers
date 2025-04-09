@@ -1,6 +1,7 @@
 <script setup>
 import {convertImageUrl} from "~/helpers/imageUtils";
 import {ref} from 'vue';
+import {Skeleton} from "~/components/ui/skeleton/index.js";
 
 const props = defineProps({
   primaryImage: {
@@ -21,9 +22,28 @@ const props = defineProps({
   }
 });
 
+
 // Track image loading state
 const primaryImageError = ref(false);
 const secondaryImageError = ref(false);
+
+const isPrimaryImageLoaded = ref(false);
+const isSecondaryImageLoaded = ref(false);
+
+const isLoading = computed(() => {
+  // Show loading state when thumbnails exist but aren't loaded yet
+  if (thumbnailSrc.value && !isPrimaryImageLoaded.value) return true;
+  if (hasSecondaryImage.value && secondaryThumbnailSrc.value && !isSecondaryImageLoaded.value) return true;
+  return false;
+});
+
+const handlePrimaryImageLoaded = () => {
+  isPrimaryImageLoaded.value = true;
+};
+
+const handleSecondaryImageLoaded = () => {
+  isSecondaryImageLoaded.value = true;
+};
 
 // Computed properties for images
 const thumbnailSrc = computed(() => {
@@ -95,18 +115,12 @@ const hasSecondaryImage = computed(() => {
             'w-full h-full object-cover transition-opacity duration-300 bg-back',
             hasSecondaryImage ? 'group-hover:opacity-0' : ''
           ]"
+          @load="handlePrimaryImageLoaded"
       />
       <!-- Hidden standard img for error detection -->
-      <NuxtImg
+      <img
           :src="thumbnailSrc"
           class="hidden"
-          loading="lazy"
-          format="webp"
-          fit="cover"
-          :class="[
-            'w-full h-full object-cover transition-opacity duration-300',
-            hasSecondaryImage ? 'group-hover:opacity-0' : ''
-          ]"
           @error="handlePrimaryImageError"
           alt=""
       />
@@ -121,6 +135,7 @@ const hasSecondaryImage = computed(() => {
           format="webp"
           fit="cover"
           class="w-full h-full object-cover absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          @load="handleSecondaryImageLoaded"
       />
       <!-- Hidden standard img for error detection -->
       <img
@@ -129,6 +144,11 @@ const hasSecondaryImage = computed(() => {
           @error="handleSecondaryImageError"
           alt=""
       />
+    </div>
+
+    <!-- Loading state - show skeleton until images are loaded -->
+    <div v-if="isLoading" class="w-full h-full absolute top-0 left-0 flex">
+      <Skeleton class="w-full h-full"/>
     </div>
 
     <!-- Fallback if both images failed to load or are not available -->
