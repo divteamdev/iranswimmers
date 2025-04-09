@@ -1,5 +1,6 @@
 <script setup lang="ts">
 
+import Copyright from "~/components/footer/Copyright.vue";
 </script>
 
 <template>
@@ -20,7 +21,7 @@
       </div>
 
     </div>
-
+    <copyright/>
   </footer>
 </template>
 
