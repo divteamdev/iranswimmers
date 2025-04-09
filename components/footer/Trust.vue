@@ -64,7 +64,7 @@ function goToSlide(index: number) {
   <div>
     <Carousel
         ref="carouselRef"
-        class="relative w-full flex items-center"
+        class="relative w-full flex items-center bg-background rounded-xl"
         :opts="{
         align: 'start',
         direction: 'rtl',
@@ -78,7 +78,7 @@ function goToSlide(index: number) {
             <img
                 :src="item?.image"
                 :alt="item.alt"
-                class="w-full h-full object-contain"
+                class="w-full h-full object-contain p-4 "
             />
           </a>
 
