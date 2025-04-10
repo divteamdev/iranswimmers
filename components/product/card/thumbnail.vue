@@ -1,6 +1,7 @@
 <script setup>
 import {convertImageUrl} from "~/helpers/imageUtils";
 import {ref} from 'vue';
+import {Skeleton} from "~/components/ui/skeleton/index.js";
 
 const props = defineProps({
   primaryImage: {
@@ -21,9 +22,28 @@ const props = defineProps({
   }
 });
 
+
 // Track image loading state
 const primaryImageError = ref(false);
 const secondaryImageError = ref(false);
+
+const isPrimaryImageLoaded = ref(false);
+const isSecondaryImageLoaded = ref(false);
+
+const isLoading = computed(() => {
+  // Show loading state when thumbnails exist but aren't loaded yet
+  if (thumbnailSrc.value && !isPrimaryImageLoaded.value) return true;
+  if (hasSecondaryImage.value && secondaryThumbnailSrc.value && !isSecondaryImageLoaded.value) return true;
+  return false;
+});
+
+const handlePrimaryImageLoaded = () => {
+  isPrimaryImageLoaded.value = true;
+};
+
+const handleSecondaryImageLoaded = () => {
+  isSecondaryImageLoaded.value = true;
+};
 
 // Computed properties for images
 const thumbnailSrc = computed(() => {
@@ -72,9 +92,6 @@ const aspectRatioClasses = computed(() => {
 
 // Determine if hover effect should be applied
 const hasSecondaryImage = computed(() => {
-  // Only show secondary image hover effect if:
-  // 1. Primary image is working correctly (no error)
-  // 2. Secondary image exists and is working correctly
   return !primaryImageError.value &&
       Boolean(secondaryThumbnailSrc.value) &&
       !secondaryImageError.value;
@@ -84,7 +101,7 @@ const hasSecondaryImage = computed(() => {
 <template>
   <div :class="['bg-card overflow-hidden relative group rounded-lg', aspectRatioClasses]">
     <!-- Primary image (or secondary as fallback) with NuxtImg -->
-    <div v-if="thumbnailSrc" class="h-full w-full bg-background p-4">
+    <div v-if="thumbnailSrc" class="h-full w-full p-4 bg-background">
       <NuxtImg
           :src="thumbnailSrc"
           :alt="imageAlt"
@@ -95,25 +112,19 @@ const hasSecondaryImage = computed(() => {
             'w-full h-full object-cover transition-opacity duration-300 bg-back',
             hasSecondaryImage ? 'group-hover:opacity-0' : ''
           ]"
+          @load="handlePrimaryImageLoaded"
       />
       <!-- Hidden standard img for error detection -->
-      <NuxtImg
+      <img
           :src="thumbnailSrc"
           class="hidden"
-          loading="lazy"
-          format="webp"
-          fit="cover"
-          :class="[
-            'w-full h-full object-cover transition-opacity duration-300',
-            hasSecondaryImage ? 'group-hover:opacity-0' : ''
-          ]"
           @error="handlePrimaryImageError"
           alt=""
       />
     </div>
 
     <!-- Secondary image with NuxtImg (shown on hover) - only if we should show hover effect -->
-    <div v-if="hasSecondaryImage" class="h-full w-full">
+    <div v-if="hasSecondaryImage" class="h-full w-full bg-background">
       <NuxtImg
           :src="secondaryThumbnailSrc"
           :alt="secondaryImageAlt"
@@ -121,6 +132,7 @@ const hasSecondaryImage = computed(() => {
           format="webp"
           fit="cover"
           class="w-full h-full object-cover absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          @load="handleSecondaryImageLoaded"
       />
       <!-- Hidden standard img for error detection -->
       <img
@@ -129,6 +141,11 @@ const hasSecondaryImage = computed(() => {
           @error="handleSecondaryImageError"
           alt=""
       />
+    </div>
+
+    <!-- Loading state - show skeleton until images are loaded -->
+    <div v-if="isLoading" class="w-full h-full absolute top-0 left-0 flex z-10">
+      <Skeleton class="w-full h-full"/>
     </div>
 
     <!-- Fallback if both images failed to load or are not available -->

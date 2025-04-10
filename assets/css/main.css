@@ -15,6 +15,8 @@
     --secondary-foreground: oklch(1 0 89);
     --muted: oklch(0.967 0.003 264.542);
     --muted-foreground: oklch(0.551 0.027 264.364);
+    --skeleton: oklch(0.99 0 89.88);
+    --skeleton-foreground: oklch(0.93 0 89.876);
     --accent: oklch(0.967 0.003 264.542);
     --accent-foreground: oklch(0.21 0.034 264.665);
     --destructive: oklch(0.68 0.266665 20.1071);
@@ -110,6 +112,8 @@
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
+    --color-skeleton: var(--skeleton);
+    --color-skeleton-foreground: var(--skeleton-foreground);
 }
 
 @layer base {
@@ -121,8 +125,13 @@
         @apply bg-background text-foreground;
     }
 
+    .container-padding{
+        @apply px-4 sm:px-6 lg:px-8 xl:px-0;
+    }
+
     .irsm-container {
-        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-0 xl:max-w-[80rem] 2xl:max-w-[96rem];
+        @apply px-4 sm:px-6 lg:px-8 xl:px-0;
+        @apply max-w-7xl mx-auto xl:max-w-[80rem] 2xl:max-w-[96rem];
     }
 
     .products-grid {

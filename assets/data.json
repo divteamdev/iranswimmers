@@ -1,0 +1,31 @@
+{
+  "menuUsefulPages": {
+    "title": "صفحات کاربردی",
+    "items": [
+      {
+        "text": "فروشگاه",
+        "link": "/shop"
+      },
+      {
+        "text": "پنل کاربری",
+        "link": "/dashboard"
+      },
+      {
+        "text": "سبد خرید",
+        "link": "/cart"
+      },
+      {
+        "text": "راهنمای خرید",
+        "link": "/purchase-guide"
+      },
+      {
+        "text": "نحوه پرداخت",
+        "link": "/payment-guide"
+      },
+      {
+        "text": "درباره ما",
+        "link": "/about"
+      }
+    ]
+  }
+}

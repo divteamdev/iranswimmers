@@ -22,21 +22,22 @@ const props = defineProps({
 </script>
 
 <template>
-  <section class="irsm-container mb-20" dir="rtl">
+  <section class="irsm-container mb-24" dir="rtl">
     <HomeSectionHeader :title="carousel.title" title-class="heading-5"
                        :show-more-link="carousel.all"/>
     <div class="flex gap-4">
-      <div class="w-[25%] xl:w-[18%] h-auto rounded-xl overflow-hidden">
-        <img
+      <!-- Banner Image -->
+      <div class="grow">
+        <Banner
             :src="banner"
-            :alt="carousel.title + ' تصویر'"
-            class="h-full object-contain"
-            loading="lazy"/>
+            :alt="bannerAlt"
+            variant="primary"
+        />
       </div>
       <ProductCarousel
           :products="carousel.products"
-          class="h-auto w-[74%] xl:w-[81%]"
-          carousel-item-class="basis-1/2 md:basis-[30.5%] lg:basis-[28.5%] xl:flex-[0_0_22.22%]"/>
+          class="h-auto w-[74%] xl:w-[80%] 2xl:w-[82%]"
+          carousel-item-class="basis-1/2 md:basis-[26.5%] lg:basis-[24.5%] xl:basis-[auto]"/>
     </div>
   </section>
 </template>
