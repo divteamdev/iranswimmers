@@ -37,18 +37,18 @@ const variantClasses = computed(() => {
   switch (props.variant) {
     case 'secondary':
       return {
-        container: 'h-full w-[30%] rounded-4xl overflow-hidden relative',
+        container: 'h-full w-[30%] rounded-2xl md:rounded-4xl overflow-hidden relative',
         image: 'h-full object-contain'
       };
     case 'full-width':
       return {
-        container: 'h-auto w-full rounded-4xl overflow-hidden relative',
+        container: 'h-auto w-full rounded-2xl md:rounded-4xl overflow-hidden relative',
         image: 'h-auto w-full object-contain'
       };
     case 'primary':
     default:
       return {
-        container: 'min-w-min h-auto rounded-4xl overflow-hidden relative',
+        container: 'min-w-min h-auto rounded-2xl md:rounded-4xl overflow-hidden relative',
         image: 'h-full object-contain'
       };
     case "custom":
