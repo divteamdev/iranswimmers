@@ -20,15 +20,17 @@ const sideBannerSrc = computed(() => props.sideBannerSrc || '/images/home-banner
 const sideBannerAlt = computed(() => props.sideBannerAlt || 'On sale banner');
 const bottomBannerSrc = computed(() => props.bottomBannerSrc || '/images/home-banners/banner-1.webp');
 const bottomBannerAlt = computed(() => props.bottomBannerAlt || 'Secondary banner');
+
+const { isMobile } = useDeviceDetection();
 </script>
 
 <template>
   <section v-if="carousel.products?.length" class="irsm-container mb-28 " dir="rtl">
-    <HomeSectionHeader :title="carousel.title" :show-more-link="carousel.all"/>
+    <HomeSectionHeader class="md:flex hidden" :title="carousel.title" :show-more-link="carousel.all"/>
 
     <div class="flex flex-col lg:flex-row gap-4">
       <!-- Side Banner - with responsive height control -->
-      <div class="w-max lg:h-auto">
+      <div class="w-max lg:h-auto md:block hidden">
         <Banner
             :src="sideBannerSrc"
             :alt="sideBannerAlt"
@@ -41,18 +43,33 @@ const bottomBannerAlt = computed(() => props.bottomBannerAlt || 'Secondary banne
       <!-- Right column with flexible distribution -->
       <div class="flex flex-col w-full lg:w-[70%] gap-4">
         <!-- Carousel takes available height with min-height to ensure proper size -->
-        <div class="flex-grow min-h-[320px]">
+        <div class="flex-grow flex md:flex-col min-h-[320px] bg-secondary md:bg-transparent py-6 pr-4 md:pr-0 md:py-0 -ml-4 sm:-ml-6 sm:-mr-6 -mr-4 md:ml-0 md:mr-0">
+
+          <div class="flex flex-col gap-4 items-start md:hidden min-w-[150px] h-auto justify-center">
+            <p class="text-background heading-3">تخفیفات 
+            </br>
+              شـگفت انگیز</p>
+            <Button variant="link" class="text-background px-0"
+            :to="carousel.all"
+            >مشاهده همه</Button>
+          </div>
+
           <ProductCarousel
               :products="carousel.products"
-              product-card-variant="secondary"
+              :product-card-variant="isMobile ? 'default' : 'secondary'"
               dir="rtl"
-              class="h-full"
-              carousel-item-class="basis-1/2 md:basis-1/3 lg:basis-1/3 xl:basis-[23.80%]"
-          />
+              :loop="!isMobile"
+              class="h-full w-full -mr-[150px] md:mr-0"
+              carousel-item-class="basis-auto md:basis-[26.5%] lg:basis-[24.5%] xl:basis-[auto]"
+          >
+          <template #banner-placeholder>
+            <div class="min-w-[150px]  h-full pointer-events-none ml-4 md:hidden"></div>
+          </template>
+        </ProductCarousel>
         </div>
 
         <!-- Bottom Banner with responsive height -->
-        <div class="h-[120px] lg:h-min">
+        <div class="h-auto w-full lg:h-min">
           <Banner
               :src="bottomBannerSrc"
               :alt="bottomBannerAlt"
