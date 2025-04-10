@@ -40,14 +40,17 @@ const productTabs = computed(() => [
 
     <home-section-on-sale :carousel="homeStore.onSaleCarousel"/>
 
-    <HomeSectionImageOnTop :carousel="homeStore.carousel1" banner="/images/home-banners/swim-glasses.webp"/>
+    <HomeSectionImageOnTop :carousel="homeStore.carousel1"
+     banner="/images/home-banners/swim-glasses.webp"/>
 
     <HomeSectionTabProducts
         :tabs="productTabs"
         banner="/images/home-banners/banner-5.webp"
         banner-alt="محصولات جدید" />
 
-    <HomeSectionBannerOnRight :carousel="homeStore.carousel5" banner="/images/home-banners/banner-6.webp"/>
+    <HomeSectionBannerOnRight :carousel="homeStore.carousel5"
+    banner-mobile="/images/home-banners/banner-6-mobile.webp"
+    banner="/images/home-banners/banner-6.webp"/>
 
     <HomeSectionImageOnRight :carousel="homeStore.carousel5" banner="/images/home-banners/image-on-right.webp"/>
 
