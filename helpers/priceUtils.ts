@@ -1,10 +1,9 @@
 /**
- * Formats a price by removing decimal places and adding commas as thousand separators
+ * Formats a price number with thousand separators
  * @param {number|string} price - The price to format
- * @param {string} currency - Optional currency symbol to append (default: '')
- * @returns {string} - Formatted price string
+ * @returns {string} - Formatted price string without currency
  */
-export function formatPrice(price: number | string, currency: string = 'تومان') {
+export function formatPrice(price: number | string): string {
     // Handle null, undefined or empty string
     if (price == null || price === '') return '';
 
@@ -15,8 +14,16 @@ export function formatPrice(price: number | string, currency: string = 'توما
     if (isNaN(numericPrice)) return '';
 
     // Round to remove decimal places and format with commas
-    const formattedPrice = Math.round(numericPrice).toLocaleString('en-US');
+    return Math.round(numericPrice).toLocaleString('en-US');
+}
 
-    // Return with optional currency symbol
-    return currency ? `${formattedPrice} ${currency}` : formattedPrice;
+/**
+ * Formats a price with currency
+ * @param {number|string} price - The price to format
+ * @param {string} currency - Currency symbol to append (default: 'تومان')
+ * @returns {string} - Formatted price string with currency
+ */
+export function formatPriceWithCurrency(price: number | string, currency: string = 'تومان'): string {
+    const formattedPrice = formatPrice(price);
+    return formattedPrice ? `${formattedPrice} ${currency}` : '';
 }
