@@ -55,10 +55,10 @@ const shouldLoop = computed(() => !isXs.value);
     
     <div class="flex gap-4">
       <!-- Banner Image -->
-      <div class="md:grow h-auto w-[140px] md:min-w-[220px]">
+      <div class="md:grow h-auto w-[140px] md:min-w-[200px]">
         <Banner 
           container-class="w-full h-full" 
-          image-class="object-cover md:object-contain"
+          image-class="object-cover"
           :src="isMobile ? bannerMobile : banner" 
           :alt="isMobile ? bannerMobileAlt : bannerAlt" 
           variant="primary" 
@@ -69,7 +69,7 @@ const shouldLoop = computed(() => !isXs.value);
       <ProductCarousel 
         :products="carousel.products" 
         :loop="shouldLoop"
-        class="h-auto w-full -mr-[156px] md:mr-0 md:w-[74%] xl:w-[80%] 2xl:w-[82%]"
+        class="h-auto w-full -mr-[156px] md:mr-0 md:w-[74%] lg:w-[80%] 2xl:w-[85%]"
         carousel-item-class="basis-auto md:basis-[26.5%] lg:basis-[24.5%] xl:basis-[auto]" 
         :show-banner-slot="true"
       >
