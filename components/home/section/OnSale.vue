@@ -37,19 +37,19 @@ const scrollPrev = () => {
 </script>
 
 <template>
-  <section v-if="carousel.products?.length" class="irsm-container mb-28 " dir="rtl">
+  <section v-if="carousel.products?.length" class="irsm-container mb-28" dir="rtl">
     <HomeSectionHeader title-class="heading-3 text-destructive" class="md:flex hidden" :title="carousel.title">
       <template #right-content>
         <!-- Carousel Navigation Buttons -->
         <div class="hidden md:flex gap-2 z-10">
           <Button variant="ghost" size="icon"
-            class="text-secondary bg-secondary/10 hover:bg-secondary/20 hover:text-secondary cursor-pointer"
+            class="text-secondary bg-secondary/10 hover:bg-secondary/20 cursor-pointer"
             @click="scrollPrev">
             <Icon name="heroicons:arrow-right" class="text-lg" />
             <span class="sr-only">Previous slide</span>
           </Button>
           <Button variant="ghost" size="icon"
-            class="text-secondary bg-secondary/10 hover:bg-secondary/20 hover:text-secondary cursor-pointer"
+            class="text-secondary bg-secondary/10 hover:bg-secondary/20 cursor-pointer"
             @click="scrollNext">
             <Icon name="heroicons:arrow-left" class="text-lg" />
             <span class="sr-only">Next slide</span>
@@ -59,50 +59,45 @@ const scrollPrev = () => {
     </HomeSectionHeader>
 
     <div class="flex flex-col lg:flex-row gap-4">
-      <!-- Side Banner - with responsive height control -->
-      <div class="w-max lg:h-auto lg:block hidden">
+      <!-- Side Banner -->
+      <div class="lg:block hidden">
         <Banner :src="sideBannerSrc" :alt="sideBannerAlt" variant="secondary" container-class="h-full w-full"
           image-class="w-full h-full object-cover" />
       </div>
 
-      <!-- Right column with flexible distribution -->
-      <div class="flex flex-col w-full lg:w-[70%] gap-4">
-        <!-- Carousel takes available height with min-height to ensure proper size -->
-        <div
-          class="flex-grow flex md:flex-col min-h-[320px] bg-secondary md:bg-transparent py-6 pr-4 md:pr-0 md:py-0 -ml-4 sm:-ml-6 sm:-mr-6 -mr-4 md:ml-0 md:mr-0 relative">
-
-          <div class="flex flex-col gap-4 items-start md:hidden min-w-[160px] h-auto justify-center">
-            <p class="text-background heading-3">تخفیفات
-              </br>
-              شـگفت انگیز</p>
-
+      <!-- Main content column -->
+      <div class="flex flex-col w-full lg:w-[73%] gap-4">
+        <!-- Carousel section -->
+        <div class="flex-grow flex md:flex-col min-h-[340px] bg-secondary md:bg-transparent py-6 pr-4 md:p-0 
+          -mx-4 sm:-mx-6 md:mx-0 relative">
+          <!-- Mobile title -->
+          <div class="flex flex-col gap-4 items-start md:hidden min-w-[160px] justify-center">
+            <p class="text-background heading-3">تخفیفات<br>شـگفت انگیز</p>
           </div>
 
+          <!-- Product carousel -->
           <ProductCarousel ref="carouselRef" :products="carousel.products"
             :product-card-variant="isMobile ? 'default' : 'secondary'" dir="rtl" :loop="false"
-            :show-banner-slot="isMobile ? true : false"
-            class="h-full w-full -mr-[160px] md:mr-0" carousel-item-class="basis-auto" :show-end-item="true">
+            :show-banner-slot="isMobile" class="h-full w-full -mr-[160px] md:mr-0"
+            carousel-item-class="basis-auto" :show-end-item="true">
             <template #banner-placeholder>
-          <div class="min-w-[140px] h-full pointer-events-none md:hidden"></div>
-        </template>
+              <div class="min-w-[140px] h-full pointer-events-none md:hidden"></div>
+            </template>
             <template #end-item>
               <Card :to="carousel.all"
                 class="h-full flex items-center justify-center bg-secondary/10 hover:bg-secondary/15 transition-colors duration-300">
-                <span class="text-background md:text-secondary body-1 flex items-center gap-2">مشاهده همه
+                <span class="body-1 flex items-center gap-2 text-background md:text-secondary">
+                  مشاهده همه
                   <Icon name="heroicons:arrow-left" class="text-background md:text-secondary text-2xl" />
                 </span>
               </Card>
             </template>
           </ProductCarousel>
-
-
         </div>
 
-        <!-- Bottom Banner with responsive height -->
-        <div class="h-auto w-full lg:h-min">
-          <Banner :src="bottomBannerSrc" :alt="bottomBannerAlt" variant="full-width" container-class="h-full"
-            image-class="w-full h-full object-contain" />
-        </div>
+        <!-- Bottom Banner -->
+        <Banner :src="bottomBannerSrc" :alt="bottomBannerAlt" variant="full-width" container-class="h-full"
+          image-class="w-full h-full object-contain" />
       </div>
     </div>
   </section>
