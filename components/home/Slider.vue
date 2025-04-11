@@ -82,7 +82,7 @@ const banners = [
 
       <CarouselContent class="-mr-4" >
         <CarouselItem v-for="(banner, index) in banners" :key="index" class="pr-4">
-          <CardContent class="flex items-center justify-center px-0 rounded-4xl overflow-hidden max-h-[800px]">
+          <CardContent class="flex items-center justify-center px-0 rounded-4xl overflow-hidden h-atuo">
             <img :src="isXs ? banner.mobile : banner.src" :alt="banner.alt"
                  class="h-full w-full object-cover"/>
           </CardContent>
