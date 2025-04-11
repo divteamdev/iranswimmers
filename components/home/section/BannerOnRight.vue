@@ -74,7 +74,7 @@ const shouldLoop = computed(() => !isXs.value);
         :show-banner-slot="true"
       >
         <template #banner-placeholder>
-          <div class="min-w-[140px] h-full pointer-events-none md:hidden ml-4"></div>
+          <div class="min-w-[140px] h-full pointer-events-none md:hidden"></div>
         </template>
       </ProductCarousel>
     </div>
