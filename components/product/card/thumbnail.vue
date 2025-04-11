@@ -101,7 +101,7 @@ const hasSecondaryImage = computed(() => {
 <template>
   <div :class="['bg-card overflow-hidden relative group rounded-lg', aspectRatioClasses]">
     <!-- Primary image (or secondary as fallback) with NuxtImg -->
-    <div v-if="thumbnailSrc" class="h-full w-full p-4 bg-background">
+    <div v-if="thumbnailSrc" class="h-full w-full bg-background">
       <NuxtImg
           :src="thumbnailSrc"
           :alt="imageAlt"
