@@ -25,7 +25,7 @@ const props = defineProps({
 <template>
   <div class="flex items-center justify-between mb-6 " dir="rtl">
     <h2 :class="titleClass + ' font-fa-num'">{{ title }}</h2>
-    <Button v-if="showMoreLink" variant="link" :to="showMoreLink" class="pl-0" :class="showMoreClass">
+    <Button v-if="showMoreLink" variant="link" :to="showMoreLink" class="pl-0" :class="showMoreClass" size="sm">
       {{ showMoreText }}
       <Icon name="heroicons:arrow-left" class="ms-1" />
     </Button>
