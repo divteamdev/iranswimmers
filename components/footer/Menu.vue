@@ -7,7 +7,7 @@ const usefulPages = computed(() => data.menuUsefulPages)
 
 <template>
   <div>
-    <h6 class="heading-5 text-start mb-4">
+    <h6 class="heading-6 text-start mb-4">
       {{ usefulPages.title }}
     </h6>
     <ul class="flex flex-col items-start gap-2">
