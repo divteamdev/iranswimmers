@@ -39,7 +39,10 @@ const props = defineProps({
 const carouselTitle = computed(() => props.carousel.title || '');
 
 // Use our device detection composable
-const { isMobile } = useDeviceDetection();
+const { isXs, isMobile } = useDeviceDetection();
+
+// Create a computed property for the loop setting
+const shouldLoop = computed(() => !isXs.value);
 </script>
 
 <template>
@@ -52,7 +55,7 @@ const { isMobile } = useDeviceDetection();
     
     <div class="flex gap-4">
       <!-- Banner Image -->
-      <div class="md:grow h-auto w-[160px] md:min-w-[220px]">
+      <div class="md:grow h-auto w-[140px] md:min-w-[220px]">
         <Banner 
           container-class="w-full h-full" 
           image-class="object-cover md:object-contain"
@@ -65,13 +68,13 @@ const { isMobile } = useDeviceDetection();
       <!-- Product Carousel -->
       <ProductCarousel 
         :products="carousel.products" 
-        :loop="!isMobile"
-        class="h-auto w-full -mr-[176px] md:mr-0 md:w-[74%] xl:w-[80%] 2xl:w-[82%]"
-        carousel-item-class="basis-[20%] md:basis-[26.5%] lg:basis-[24.5%] xl:basis-[auto]" 
+        :loop="shouldLoop"
+        class="h-auto w-full -mr-[156px] md:mr-0 md:w-[74%] xl:w-[80%] 2xl:w-[82%]"
+        carousel-item-class="basis-auto md:basis-[26.5%] lg:basis-[24.5%] xl:basis-[auto]" 
         :show-banner-slot="true"
       >
         <template #banner-placeholder>
-          <div class="min-w-[160px] h-full pointer-events-none md::hidden ml-4"></div>
+          <div class="min-w-[140px] h-full pointer-events-none md:hidden ml-4"></div>
         </template>
       </ProductCarousel>
     </div>
