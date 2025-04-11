@@ -58,12 +58,12 @@ const { isMobile } = useDeviceDetection();
               :products="carousel.products"
               :product-card-variant="isMobile ? 'default' : 'secondary'"
               dir="rtl"
-              :loop="!isMobile"
+              :loop="false"
               class="h-full w-full -mr-[150px] md:mr-0"
-              carousel-item-class="basis-auto md:basis-[26.5%] lg:basis-[24.5%] xl:basis-[auto]"
+              carousel-item-class="basis-auto"
           >
           <template #banner-placeholder>
-            <div class="min-w-[150px]  h-full pointer-events-none ml-4 md:hidden"></div>
+            <div v-if="isMobile" class="min-w-[150px]  h-full pointer-events-none ml-4 "></div>
           </template>
         </ProductCarousel>
         </div>
