@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import {cn} from '@/lib/utils'
 
+interface Social {
+  name: string;
+  icon: string;
+  link: string;
+  color: string;
+  logoColor: string;
+  hoverColor: string;
+}
+
 const socials = [
   {
     name: 'اینستاگرام',
@@ -29,7 +38,7 @@ const socials = [
 ]
 
 // Helper function to compute button classes
-const getSocialButtonClasses = (social) => {
+const getSocialButtonClasses = (social: Social) => {
   return cn(
       'text-xl',
       social.color,
@@ -41,25 +50,25 @@ const getSocialButtonClasses = (social) => {
 
 <template>
   <div class="flex flex-col  lg:justify-between h-full">
-    <h6 class="heading-5 text-center md:text-start mb-4">
+    <h6 class="heading-6 text-center md:text-start mb-4">
       ارتباط با ما
     </h6>
     <div class="flex flex-col items-center md:items-end gap-2 mb-4 justify-center" dir="ltr">
       <Button size="sm" class="w-fit" variant="ghost" href="tel:+982188881426" as="a">
-        <span class="caption-2">021</span>
+        <span class="body-3">021</span>
         <span class="text-primary body-1">
-          88881426
+          88 88 1426
         </span>
       </Button>
 
       <Button as="a" size="sm" class="w-fit" variant="ghost" href="mailto:contact@iranswimmers.com">
-        <span class="text-foreground body-2">
+        <span class="text-foreground body-3">
           contact@iranswimmers.com
         </span>
       </Button>
     </div>
 
-    <a class="body-2 bg-primary/10 text-primary text-center py-2 mb-4 md:text-start md:px-4 rounded-lg"
+    <a class="body-3 bg-primary/10 text-primary text-center py-2 mb-4 md:text-start md:px-4 rounded-lg"
        target="_blank" rel="noopener noreferrer"
        href="https://www.google.com/maps/place/iranswimmers/@35.762189,51.4122559,17z/data=!3m1!4b1!4m6!3m5!1s0x3f8e07c25f8a70e7:0xd1d2cae8e8cbcbc8!8m2!3d35.7621847!4d51.4148308!16s%2Fg%2F11sttd2rd4?entry=ttu&g_ep=EgoyMDI1MDQwOC4wIKXMDSoASAFQAw%3D%3D"
     >
