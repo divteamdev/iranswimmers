@@ -27,6 +27,7 @@ const props = defineProps({
     default: false
   }
 })
+
 </script>
 
 <template>
@@ -47,7 +48,7 @@ const props = defineProps({
 
         <CarouselItem v-for="(product, index) in products"
                       :key="index"
-                      :class="carouselItemClass + ' max-w-[300px] min-w-[220px] w-auto'">
+                      :class="carouselItemClass + ' max-w-[300px] min-w-[200px] md:min-w-[220px] w-auto'">
           <ProductCard
               :variant="productCardVariant"
               :product="product" :index="index" class="h-full"/>
