@@ -87,7 +87,7 @@
     /* ~30px to 56px */
     --fluid-h3: clamp(1.5rem, 1rem + 2.5vw, 3rem);
     /* ~24px to 48px */
-    --fluid-h4: clamp(1.25rem, 0.9rem + 1.8vw, 2.25rem);
+    --fluid-h4: clamp(1.25rem, 0.9rem + 1.8vw, 1.75rem);
     /* ~20px to 36px */
     --fluid-h5: clamp(1.125rem, 0.85rem + 1.4vw, 1.15rem);
     /* ~18px to 28px */
