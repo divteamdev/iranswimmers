@@ -53,23 +53,23 @@ const cardVariants = computed(() => {
 <template>
   <Card
       dir="rtl"
-      class="justify-between min-h-[320px] lg:min-h-[360px] 2xl:min-w-[240px]"
+      class="justify-between min-h-[280px] lg:min-h-[360px] 2xl:min-w-[240px]"
       :class="cardVariants.card"
       :to="`/product/${product.slug}`">
     <CardHeader>
       <ProductCardThumbnail :primaryImage="product.thumbnail" :secondaryImage="product.thumbnail_alt"/>
 
-      <CardTitle tag="h4" class="heading-5" :class="cardVariants.title">
+      <CardTitle tag="h4" class="heading-6" :class="cardVariants.title">
         {{ product.name }}
       </CardTitle>
     </CardHeader>
 
     <CardFooter>
       <div class="flex items-center gap-1">
-        <span class="font-fa-num body-1" :class="cardVariants.price">
+        <span class="font-fa-num body-2" :class="cardVariants.price">
           {{ formatPrice(product.price) }}
         </span>
-        <span class="text-xs font-fa-num" :class="cardVariants.currency">
+        <span class="body-4" :class="cardVariants.currency">
           تومان
         </span>
       </div>
