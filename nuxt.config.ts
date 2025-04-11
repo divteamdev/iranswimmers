@@ -8,6 +8,7 @@ export default defineNuxtConfig({
         '~/assets/css/main.css',
         '~/assets/fonts/yekanFa.css',
         '~/assets/css/typography.css',
+        // '~/assets/css/responsive-typography.css',
         '~/assets/css/transitions.css'
     ],
 
