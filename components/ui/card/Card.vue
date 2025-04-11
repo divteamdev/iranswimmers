@@ -20,7 +20,7 @@ const componentTag = computed(() => (props.to ? NuxtLink : (props.href ? 'a' : '
       :href="href"
       :class="
       cn(
-        'bg-card text-card-foreground flex flex-col gap-6 rounded-xl p-4',
+        'bg-card text-card-foreground flex flex-col gap-6 rounded-xl p-3 md:p-4',
         props.class,
       )
     "
