@@ -53,7 +53,7 @@ const cardVariants = computed(() => {
 <template>
   <Card
       dir="rtl"
-      class="justify-between min-h-[280px] lg:min-h-[360px] 2xl:min-w-[240px]"
+      class="justify-between min-h-[310px] md:min-h-[280px] lg:min-h-[340px] 2xl:min-w-[210px]"
       :class="cardVariants.card"
       :to="`/product/${product.slug}`">
     <CardHeader>
