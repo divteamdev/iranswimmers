@@ -40,6 +40,31 @@ function goToSlide(index: number) {
     carouselRef.value.carouselApi.scrollTo(index)
   }
 }
+
+const {isMobile, isXs} = useDeviceDetection()
+
+const banners = [
+  {
+    mobile: '/images/hero-banners/banner-mobile-1.webp',
+    src: '/images/hero-banners/banner-1.webp',
+    alt: 'Banner image',
+  },
+  {
+    mobile: '/images/hero-banners/banner-mobile-2.webp',
+    src: '/images/hero-banners/banner-2.webp',
+    alt: 'Banner image',
+  },
+  {
+    mobile: '/images/hero-banners/banner-mobile-3.webp',
+    src: '/images/hero-banners/banner-3.webp',
+    alt: 'Banner image',
+  },
+  {
+    mobile: '/images/hero-banners/banner-mobile-4.webp',
+    src: '/images/hero-banners/banner-4.webp',
+    alt: 'Banner image',
+  },
+]
 </script>
 
 <template>
@@ -56,9 +81,9 @@ function goToSlide(index: number) {
         @init-api="handleInitApi">
 
       <CarouselContent class="-mr-4" >
-        <CarouselItem v-for="(_, index) in totalSlides" :key="index" class="pr-4">
-          <CardContent class="flex items-center justify-center px-0 rounded-4xl overflow-hidden">
-            <img :src="`/images/hero-banners/banner-${index + 1}.webp`" alt="Banner image"
+        <CarouselItem v-for="(banner, index) in banners" :key="index" class="pr-4">
+          <CardContent class="flex items-center justify-center px-0 rounded-4xl overflow-hidden max-h-[800px]">
+            <img :src="isXs ? banner.mobile : banner.src" :alt="banner.alt"
                  class="h-full w-full object-cover"/>
           </CardContent>
         </CarouselItem>
