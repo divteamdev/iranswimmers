@@ -1,10 +1,18 @@
 <script setup lang="ts">
+import { useDebounceFn } from '@vueuse/core'
+
+// State management
 const isMobileMenuOpen = ref(false)
 const { isMobile } = useDeviceDetection()
-const lastScrollY = ref(0)
-const isScrollingUp = ref(false)
-const isAtTop = ref(true)
 
+// Scroll state with throttled updates for better performance
+const headerState = reactive({
+  lastScrollY: 0,
+  isScrollingUp: true,
+  isAtTop: true
+})
+
+// Methods
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
 }
@@ -13,23 +21,43 @@ const closeMobileMenu = () => {
   isMobileMenuOpen.value = false
 }
 
-// Handle scroll events
-const handleScroll = () => {
+// Throttled scroll handler for better performance
+const handleScroll = useDebounceFn(() => {
   const currentScrollY = window.scrollY
-  
-  // Determine scroll direction
-  isScrollingUp.value = currentScrollY < lastScrollY.value
-  isAtTop.value = currentScrollY <= 0
-  
-  lastScrollY.value = currentScrollY
-}
+  headerState.isScrollingUp = currentScrollY < headerState.lastScrollY
+  headerState.isAtTop = currentScrollY <= 0
+  headerState.lastScrollY = currentScrollY
+}, 10)
 
-// Add scroll listener
+// Computed styles for cleaner template
+const headerClasses = computed(() => ({
+  fixed: !isMobile.value,
+  'h-20': !headerState.isAtTop && !isMobile.value
+}))
+
+const ribbonClasses = computed(() => ({
+  'opacity-0 h-0': !headerState.isAtTop && !isMobile.value,
+  'opacity-100 h-12': headerState.isAtTop || isMobile.value
+}))
+
+const mainNavClasses = computed(() => ({
+  'h-0 -translate-y-[130%]': !headerState.isAtTop && !headerState.isScrollingUp && !isMobile.value,
+  'h-20 translate-y-0': headerState.isAtTop || headerState.isScrollingUp || isMobile.value
+}))
+
+const menuNavClasses = computed(() => ({
+  '-translate-y-[140%]': !headerState.isAtTop && headerState.isScrollingUp && !isMobile.value,
+  '-translate-y-[42%] h-20': !headerState.isScrollingUp && !isMobile.value,
+  'h-auto translate-y-0': headerState.isAtTop
+}))
+
+// Lifecycle hooks
 onMounted(() => {
   window.addEventListener('scroll', handleScroll, { passive: true })
+  // Initial calculation to set correct state
+  handleScroll()
 })
 
-// Clean up listener
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
@@ -37,20 +65,14 @@ onUnmounted(() => {
 
 <template>
   <header 
-    class="flex flex-col w-full top-0 z-50 bg-transparent"
-    :class="{
-      'h-20': !isAtTop && !isMobile,
-      'fixed': !isMobile
-    }"
+    class="flex flex-col w-full top-0 z-50 bg-transparent transition-all duration-200"
+    :class="headerClasses"
     dir="rtl"
   >
     <!-- Ribbon Layer -->
     <div 
       class="transition-all duration-300 ease-in-out"
-      :class="{
-        'opacity-0 h-0': !isAtTop,
-        'opacity-100 h-12': isAtTop || isMobile
-      }"
+      :class="ribbonClasses"
     >
       <HeaderRibbon/>
     </div>
@@ -58,10 +80,7 @@ onUnmounted(() => {
     <!-- Second Layer (Logo, Search, User Actions) -->
     <div 
       class="flex items-center justify-between w-full px-4 md:px-8 py-4 border-b border-b-border transition-all duration-300 ease-in-out z-10 bg-background"
-      :class="{
-        'h-0 -translate-y-[130%]': !isAtTop && !isScrollingUp && !isMobile,
-        'h-20 translate-y-0': isAtTop || isScrollingUp || isMobile
-      }"
+      :class="mainNavClasses"
     >
       <HeaderLogo/>
       
@@ -75,11 +94,7 @@ onUnmounted(() => {
     <!-- Third Layer (Menu, Support) -->
     <div 
       class="hidden md:flex items-center justify-between w-full px-8 py-4 border-b border-b-border transition-all duration-300 bg-background ease-in-out z-0"
-      :class="{
-        '-translate-y-[140%]': !isAtTop && isScrollingUp && !isMobile,
-        '-translate-y-[42%] h-20': !isScrollingUp && !isMobile,
-        'h-auto translate-y-0': isAtTop
-      }"
+      :class="menuNavClasses"
     >
       <HeaderMenu/>
       <HeaderSupportInfo/>
@@ -99,5 +114,5 @@ onUnmounted(() => {
   </header>
   
   <!-- Add padding to prevent content from jumping under fixed header -->
-  <div v-if="!isMobile" class="h-[calc(12rem+1px)] md:h-[calc(16rem+1px)]"></div>
+  <div v-if="!isMobile" class="h-[calc(12rem+1px)]"></div>
 </template>
