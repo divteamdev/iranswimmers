@@ -23,8 +23,8 @@ const tabs: Tab[] = [
   },
   {
     id: 'websitePages',
-    label: 'موارد دیگر',
-    icon: 'mdi-more'
+    label: 'صفحات و تماس',
+    icon: 'mdi-menu'
   }
 ]
 
@@ -41,14 +41,14 @@ const activeTab = computed({
         v-for="tab in tabs"
         :key="tab.id"
         @click="activeTab = tab.id"
-        class="flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all duration-200 whitespace-nowrap no-ring"
+        class="flex items-center border-b-2 gap-2 px-4 py-3 body-3 font-medium transition-all duration-200 whitespace-nowrap no-ring"
         :class="[
           activeTab === tab.id 
-            ? 'text-primary border-b-2 border-primary' 
-            : 'text-muted-foreground hover:text-foreground'
+            ? 'text-primary border-b-primary' 
+            : 'text-muted-foreground hover:text-foreground border-b-transparent'
         ]"
       >
-        <i :class="tab.icon" class="text-lg" />
+        <i :class="tab.icon" class="body-3" />
         <span>{{ tab.label }}</span>
         <i
           class="mdi mdi-chevron-down transition-all duration-300"
