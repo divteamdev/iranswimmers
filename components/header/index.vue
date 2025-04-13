@@ -1,3 +1,57 @@
+<template>
+  <header
+    class="flex flex-col w-full top-0 bg-transparent transition-all duration-300"
+    :class="[headerClasses, headerZIndex]"
+    dir="rtl"
+  >
+    <!-- Ribbon Layer -->
+    <div
+      class="transition-all duration-300 ease-in-out overflow-hidden"
+      :class="ribbonClasses"
+    >
+      <HeaderRibbon />
+    </div>
+
+    <!-- Second Layer (Logo, Search, User Actions) -->
+    <div
+      class="flex items-center justify-between w-full px-4 md:px-8 py-4 border-b border-b-border transition-transform duration-300 ease-in-out z-20 bg-background"
+      :class="secondLayerClasses"
+    >
+      <HeaderLogo />
+      
+      <div class="grow max-w-lg lg:max-w-xl xl:max-w-2xl hidden md:block">
+        <HeaderSearch />
+      </div>
+
+      <HeaderUserActions @toggle-mobile-menu="toggleMobileMenu" />
+    </div>
+
+    <!-- Third Layer (Menu, Support) -->
+    <div
+      class="hidden md:flex items-center justify-between w-full px-8 py-4 border-b border-b-border transition-transform duration-300 bg-background ease-in-out"
+      :class="thirdLayerClasses"
+    >
+      <HeaderMenu />
+      <HeaderSupportInfo />
+    </div>
+
+    <!-- Mobile Search -->
+    <div
+      class="flex md:hidden items-center justify-between w-full px-4 py-3 border-b border-b-border bg-background transition-all duration-300 ease-in-out"
+      :class="mobileSearchClasses"
+    >
+      <div class="grow">
+        <HeaderSearch />
+      </div>
+    </div>
+
+    <HeaderMobileMenu
+      :isOpen="isMobileMenuOpen"
+      @close="closeMobileMenu"
+    />
+  </header>
+</template>
+
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/core'
 
@@ -5,11 +59,12 @@ import { useDebounceFn } from '@vueuse/core'
 const isMobileMenuOpen = ref(false)
 const { isMobile } = useDeviceDetection()
 
-// Scroll state with throttled updates for better performance
+// Scroll state
 const headerState = reactive({
   lastScrollY: 0,
   isScrollingUp: true,
-  isAtTop: true
+  isAtTop: true,
+  scrollDirection: 'none'
 })
 
 // Methods
@@ -21,40 +76,79 @@ const closeMobileMenu = () => {
   isMobileMenuOpen.value = false
 }
 
-// Throttled scroll handler for better performance
+// Optimized scroll handler
 const handleScroll = useDebounceFn(() => {
   const currentScrollY = window.scrollY
-  headerState.isScrollingUp = currentScrollY < headerState.lastScrollY
+  const previousScrollY = headerState.lastScrollY
+  
+  headerState.isScrollingUp = currentScrollY < previousScrollY
   headerState.isAtTop = currentScrollY <= 0
   headerState.lastScrollY = currentScrollY
+  
+  // Update scroll direction with threshold
+  if (Math.abs(currentScrollY - previousScrollY) > 5) {
+    headerState.scrollDirection = headerState.isScrollingUp ? 'up' : 'down'
+  }
 }, 10)
 
-// Computed styles for cleaner template
+// Computed styles
 const headerClasses = computed(() => ({
-  fixed: !isMobile.value,
-  'h-20': !headerState.isAtTop && !isMobile.value
+  'sticky top-0': !headerState.isAtTop,
+  'relative': headerState.isAtTop,
+  'h-auto': true
+}))
+
+const headerZIndex = computed(() => ({
+  'z-50': !headerState.isAtTop,
+  'z-20': headerState.isAtTop
 }))
 
 const ribbonClasses = computed(() => ({
-  'opacity-0 h-0': !headerState.isAtTop && !isMobile.value,
-  'opacity-100 h-12': headerState.isAtTop || isMobile.value
+  '-translate-y-full': !headerState.isAtTop,
+  'translate-y-0': headerState.isAtTop
 }))
 
-const mainNavClasses = computed(() => ({
-  'h-0 -translate-y-[130%]': !headerState.isAtTop && !headerState.isScrollingUp && !isMobile.value,
-  'h-20 translate-y-0': headerState.isAtTop || headerState.isScrollingUp || isMobile.value
-}))
+const secondLayerClasses = computed(() => {
+  if (isMobile.value) {
+    return {
+      'transform transition-transform duration-300': true,
+      'translate-y-0': headerState.isAtTop,
+      '-translate-y-10': !headerState.isAtTop && !headerState.isScrollingUp,
+      '-translate-y-[160%]': !headerState.isAtTop && headerState.isScrollingUp
+    }
+  }
+  return {
+    'transform transition-transform duration-300': true,
+    'translate-y-0': headerState.isAtTop,
+    '-translate-y-12': headerState.isScrollingUp,
+    '-translate-y-[150%]': !headerState.isAtTop && !headerState.isScrollingUp
+  }
+})
 
-const menuNavClasses = computed(() => ({
-  '-translate-y-[140%]': !headerState.isAtTop && headerState.isScrollingUp && !isMobile.value,
-  '-translate-y-[42%] h-20': !headerState.isScrollingUp && !isMobile.value,
-  'h-auto translate-y-0': headerState.isAtTop
+const thirdLayerClasses = computed(() => {
+  if (isMobile.value) {
+    return {
+      'transform transition-transform duration-300': true,
+      'translate-y-0': headerState.isAtTop || headerState.isScrollingUp,
+      '-translate-y-full': !headerState.isAtTop && !headerState.isScrollingUp
+    }
+  }
+  return {
+    'transform transition-transform duration-300': true,
+    'translate-y-0': headerState.isAtTop,
+    '-translate-y-[200%]': !headerState.isAtTop && headerState.isScrollingUp,
+    '-translate-y-[180%]': !headerState.isAtTop && !headerState.isScrollingUp
+  }
+})
+
+const mobileSearchClasses = computed(() => ({
+  '-translate-y-[200%]': !headerState.isAtTop || (headerState.isAtTop && !headerState.isScrollingUp),
+  'translate-y-0': headerState.isAtTop,
 }))
 
 // Lifecycle hooks
 onMounted(() => {
   window.addEventListener('scroll', handleScroll, { passive: true })
-  // Initial calculation to set correct state
   handleScroll()
 })
 
@@ -62,57 +156,3 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 </script>
-
-<template>
-  <header 
-    class="flex flex-col w-full top-0 z-50 bg-transparent transition-all duration-200"
-    :class="headerClasses"
-    dir="rtl"
-  >
-    <!-- Ribbon Layer -->
-    <div 
-      class="transition-all duration-300 ease-in-out"
-      :class="ribbonClasses"
-    >
-      <HeaderRibbon/>
-    </div>
-
-    <!-- Second Layer (Logo, Search, User Actions) -->
-    <div 
-      class="flex items-center justify-between w-full px-4 md:px-8 py-4 border-b border-b-border transition-all duration-300 ease-in-out z-10 bg-background"
-      :class="mainNavClasses"
-    >
-      <HeaderLogo/>
-      
-      <div class="grow max-w-lg lg:max-w-xl xl:max-w-2xl hidden md:block">
-        <HeaderSearch/>
-      </div>
-
-      <HeaderUserActions/>
-    </div>
-
-    <!-- Third Layer (Menu, Support) -->
-    <div 
-      class="hidden md:flex items-center justify-between w-full px-8 py-4 border-b border-b-border transition-all duration-300 bg-background ease-in-out z-0"
-      :class="menuNavClasses"
-    >
-      <HeaderMenu/>
-      <HeaderSupportInfo/>
-    </div>
-
-    <!-- Mobile Search -->
-    <div class="flex md:hidden items-center justify-between w-full px-4 py-3 border-b border-b-border bg-background">
-      <div class="grow">
-        <HeaderSearch/>
-      </div>
-    </div>
-
-    <HeaderMobileMenu 
-      :isOpen="isMobileMenuOpen"
-      @close="closeMobileMenu"
-    />
-  </header>
-  
-  <!-- Add padding to prevent content from jumping under fixed header -->
-  <div v-if="!isMobile" class="h-[calc(12rem+1px)]"></div>
-</template>
