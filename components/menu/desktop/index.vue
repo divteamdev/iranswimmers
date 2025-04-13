@@ -4,7 +4,6 @@ import { useCategoriesStore } from '~/stores/shop/categoriesStore'
 import { Button } from '@/components/ui/button'
 import CategoryList from './CategoryList.vue'
 import SubMenu from './SubMenu.vue'
-import LoadingIndicator from './LoadingIndicator.vue'
 import MenuContainer from './MenuContainer.vue'
 import NoDataFound from './NoDataFound.vue'
 import type { Category } from './types'
@@ -12,7 +11,6 @@ import type { Category } from './types'
 const categoriesStore = useCategoriesStore()
 const mainCategories = ref<Category[]>([])
 const targetCategory = ref<Category | null>(null)
-const activeCategory = ref<Category | null>(null)
 const activeSubMenu = ref(0)
 const isMenuVisible = ref(false)
 const isLoading = ref(false)
@@ -125,10 +123,6 @@ onMounted(async () => {
 .btn-text {
   font-size: 0.875rem;
   font-weight: 500;
-}
-
-.menu-container {
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 /* Category styles */

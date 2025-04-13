@@ -15,25 +15,19 @@ const handleCategoryHover = (categoryId: number) => {
 </script>
 
 <template>
-  <div class="flex flex-col h-auto w-auto min-w-[20%] border-l border-border/50 bg-muted overflow-auto max-h-[500px]">
+  <div class="flex flex-col h-auto w-auto min-w-[20%] border-l border-l-border bg-muted/50 overflow-auto max-h-[500px]">
     <ul class="h-full flex flex-col">
       <nuxt-link
         v-for="child in children"
         :key="child.id"
         :to="`/product-category/${child.slug}`"
-        class="flex flex-row gap-2 px-3 py-3.5 items-center cursor-pointer transition-all duration-300"
+        class="flex flex-row gap-3 px-3 py-3.5 items-center cursor-pointer transition-all duration-300 border-b border-b-foreground/10"
         :class="{'active-category': activeSubmenu === child.id}"
         @mouseover="() => handleCategoryHover(child.id)"
       >
-        <Icon name="hugeicons:swimming" class="main-item__icon" />
+        <Icon name="hugeicons:swimming" class="text-xl text-primary" />
         
-        <span class="main-item__title w-auto grow body-4">{{ child.name }}</span>
-        
-        <Icon 
-          v-if="child.children && child.children.length > 0"
-          name="hugeicons:chevron-left"
-          class="main-item__icon__append"
-        />
+        <span class="w-auto grow body-3 font-medium">{{ child.name }}</span>
       </nuxt-link>
     </ul>
   </div>

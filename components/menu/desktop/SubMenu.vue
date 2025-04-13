@@ -26,7 +26,7 @@ const props = defineProps<{
         </nuxt-link>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 w-full">
         <div 
           v-for="grandchild in child.children" 
           :key="grandchild.id" 
@@ -34,7 +34,7 @@ const props = defineProps<{
         >
           <nuxt-link 
             :to="`/product-category/${grandchild.slug}`"
-            class="child-item hover:text-primary hover:bg-muted hover:rounded-md text-foreground font-medium body-3 leading-relaxed py-2 px-3 w-full flex items-center transition-all duration-300"
+            class="child-item hover:text-primary hover:bg-muted hover:rounded-md text-foreground font-medium body-4 leading-relaxed py-2 px-3 w-full flex items-center transition-all duration-300"
           >
             <Icon name="hugeicons:swimming" class="text-xl text-primary ml-2" />
             {{ grandchild.name }}
