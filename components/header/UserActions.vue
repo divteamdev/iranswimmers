@@ -1,5 +1,16 @@
 <script setup lang="ts">
+import MenuMobile from '~/components/menu/mobile/index.vue'
+
 const { isMobile } = useDeviceDetection()
+const isMenuOpen = ref(false)
+
+const toggleMobileMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value
+}
+
+const handleMenuClose = () => {
+  isMenuOpen.value = false
+}
 </script>
 
 <template>
@@ -15,12 +26,17 @@ const { isMobile } = useDeviceDetection()
     <Button 
       class="md:hidden" 
       size="icon-lg" 
-      variant="ghost">
+      variant="ghost"
+      @click="toggleMobileMenu">
       <Icon name="hugeicons:menu-01" class="text-2xl"/>
     </Button>
 
     <Button variant="ghost" size="icon-lg" class="flex">
       <Icon name="heroicons:shopping-cart" class="text-2xl"/>
     </Button>
+    
+
   </div>
+
+  <MenuMobile :open="isMenuOpen" @close="handleMenuClose" />
 </template> 
