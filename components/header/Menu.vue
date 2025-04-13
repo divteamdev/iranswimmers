@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// Move menu items outside of component setup for better caching
+// Define menu items outside for better performance
 const menuItems = [
   {
     name: 'صفحه نخست',
@@ -27,47 +27,34 @@ const menuItems = [
   },
 ] as const;
 
-const props = defineProps({
-  isMobile: {
-    type: Boolean,
-    default: false
-  }
-})
+defineProps<{
+  isMobile?: boolean
+}>()
 </script>
 
 <template>
-  <div 
-  class="flex flex-col gap-4 md:flex-row md:items-center">
+  <div class="flex flex-col gap-4 md:flex-row md:items-center">
     <Button 
       variant="secondary" 
       class="font-fa-num justify-start" 
       to="/shop"
       size="lg"
-      >
+    >
       <Icon name="hugeicons:menu-01" class="text-lg"/>
-      
-      <span class="hidden lg:block">
-        دسته‌بندی محصولات
-      </span>
-
-      <span class="block lg:hidden">
-      فهرست
-      </span>
-
+      <span class="hidden lg:block">دسته‌بندی محصولات</span>
+      <span class="block lg:hidden">فهرست</span>
     </Button>
 
     <nav class="w-full">
-      <ul :class="[
-        'hidden lg:flex md:items-center md:justify-between',
-      ]">
+      <ul class="hidden lg:flex md:items-center md:justify-between">
         <HeaderItem
-            v-for="item in menuItems"
-            :key="item.to"
-            :name="item.name"
-            :icon="item.icon"
-            :icon-color="item.color"
-            :to="item.to"
-            :class="isMobile ? 'py-2 border-b border-border' : 'border-l border-l-border h-4 last:border-l-0'"
+          v-for="item in menuItems"
+          :key="item.to"
+          :name="item.name"
+          :icon="item.icon"
+          :icon-color="item.color"
+          :to="item.to"
+          :class="isMobile ? 'py-2 border-b border-border' : 'border-l border-l-border h-4 last:border-l-0'"
         />
       </ul>
     </nav>
