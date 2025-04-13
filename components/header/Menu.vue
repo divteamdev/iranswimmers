@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import DesktopMenu from '~/components/menu/desktop/index.vue'
+
 // Define menu items outside for better performance
 const menuItems = [
   {
@@ -34,15 +36,18 @@ defineProps<{
 
 <template>
   <div class="flex flex-col gap-4 md:flex-row md:items-center">
+    <div class="hidden lg:block">
+      <MenuDesktop />
+    </div>
+    
     <Button 
       variant="secondary" 
-      class="font-fa-num justify-start" 
+      class="font-fa-num justify-start lg:hidden" 
       to="/shop"
       size="lg"
     >
       <Icon name="hugeicons:menu-01" class="text-lg"/>
-      <span class="hidden lg:block">دسته‌بندی محصولات</span>
-      <span class="block lg:hidden">فهرست</span>
+      <span class="block">فهرست</span>
     </Button>
 
     <nav class="w-full">
