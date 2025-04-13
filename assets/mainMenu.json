@@ -1,0 +1,80 @@
+{
+    "mainMenu": [
+        {
+            "text": "فروشگاه",
+            "link": "/shop",
+            "icon": "hugeicons:store-01",
+            "iconColor": "text-secondary"
+        },
+        {
+            "text": "آکادمی ایران سوییمرز",
+            "link": "/academy",
+            "icon": "hugeicons:swimming",
+            "iconColor": "text-primary"
+        },
+        {
+            "text": "مجله ایران سوییمرز",
+            "link": "/mag",
+            "icon": "heroicons:document-text",
+            "iconColor": "text-[#8224e3]"
+        },
+        {
+            "text": "درباره ما",
+            "link": "/about",
+            "icon": "heroicons:information-circle",
+            "iconColor": "text-destructive"
+        },
+        {
+            "text": "تماس با ما",
+            "link": "/contact",
+            "icon": "hugeicons:customer-support",
+            "iconColor": "text-green-500"
+        }
+    ],
+
+    "contact": [
+        {
+            "text": "تلفن تماس",
+            "icon": "hugeicons:call-02",
+            "color": "bg-primary/5",
+            "iconColor": "text-primary",
+            "hoverColor": "hover:bg-primary/20",
+            "link": "tel:+989123456789"
+        },
+        {
+            "text": "ایمیل",
+            "icon": "hugeicons:mail-01",
+            "color": "bg-secondary/5",
+            "iconColor": "text-secondary",
+            "hoverColor": "hover:bg-secondary/20",
+            "link": "mailto:info@iranswimmers.com"
+        }
+    ],
+
+    "socials": [
+        {
+            "text": "اینستاگرام",
+            "icon": "hugeicons:instagram",
+            "link": "https://www.instagram.com/iranswimmers/",
+            "color": "bg-[#BD69FF]/5",
+            "logoColor": "text-[#FF6969]",
+            "hoverColor": "hover:bg-[#BD69FF]/20"
+        },
+        {
+            "text": "تلگرام",
+            "icon": "hugeicons:telegram",
+            "link": "https://t.me/iranswimmers",
+            "color": "bg-primary/5",
+            "logoColor": "text-primary",
+            "hoverColor": "hover:bg-primary/20"
+        },
+        {
+            "text": "واتس اپ",
+            "icon": "hugeicons:whatsapp",
+            "link": "https://wa.me/+989015521838",
+            "color": "bg-[#19AE19]/5",
+            "logoColor": "text-[#19AE19]",
+            "hoverColor": "hover:bg-[#19AE19]/20"
+        }
+    ]
+}
