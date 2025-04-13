@@ -29,7 +29,7 @@ const props = defineProps<{
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 w-full">
         <div 
           v-for="grandchild in child.children" 
-          :key="grandchild.id" 
+          :key="grandchild.id"
           class="w-full"
         >
           <nuxt-link 
