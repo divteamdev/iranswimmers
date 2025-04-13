@@ -9,7 +9,8 @@ export default defineNuxtConfig({
         '~/assets/fonts/yekanFa.css',
         '~/assets/css/typography.css',
         // '~/assets/css/responsive-typography.css',
-        '~/assets/css/transitions.css'
+        '~/assets/css/transitions.css',
+        '~/assets/css/animations.css'
     ],
 
     app: {
