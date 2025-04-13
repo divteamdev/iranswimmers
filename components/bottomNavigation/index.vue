@@ -1,7 +1,18 @@
 <script setup lang="ts">
-const { isMobile, isTablet } = useDeviceDetection()
+import { useSearch } from '~/composables/useSearch';
 
-const navItems = [
+const { isMobile, isTablet } = useDeviceDetection()
+const { handleButtonClick } = useSearch()
+
+interface NavItem {
+  name: string;
+  icon: string;
+  to: string;
+  color: string;
+  action?: () => void;
+}
+
+const navItems: NavItem[] = [
   {
     name: 'خانه',
     icon: 'home',
@@ -19,6 +30,7 @@ const navItems = [
     icon: 'search',
     to: '#search',
     color: 'text-primary',
+    action: handleButtonClick,
   },
   {
     name: 'سبد خرید',
@@ -26,14 +38,13 @@ const navItems = [
     to: '/checkout/cart',
     color: 'text-[#8224e3]',
   },
-
   {
     name: 'پروفایل',
     icon: 'user',
     to: '/user',
     color: 'text-primary',
   },
-] as const
+]
 
 const route = useRoute()
 const isActive = (path: string) => route.path === path
@@ -45,9 +56,10 @@ const isActive = (path: string) => route.path === path
       <NuxtLink
         v-for="item in navItems"
         :key="item.to"
-        :to="item.to"
+        :to="item.action ? undefined : item.to"
         class="flex flex-col items-center justify-center w-full h-full border-l border-l-border/50 :last-border-none pt-1"
         :class="isActive(item.to) ? 'text-primary' : 'text-muted-foreground'"
+        @click="item.action && item.action()"
       >
         <BottomNavigationIcon
           :name="item.icon"
