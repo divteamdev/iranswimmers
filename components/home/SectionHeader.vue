@@ -18,14 +18,28 @@ const props = defineProps({
   showMoreClass: {
     type: String,
     default: ''
+  },
+  titleBadge: {
+    type: String,
+    default: ''
+  },
+  titleBadgeClass: {
+    type: String,
+    default: 'text-destructive bg-destructive/10 px-2 py-1 rounded-full font-fa-num body-4'
   }
 })
 </script>
 
 <template>
   <div class="flex items-center justify-between mb-6 " dir="rtl">
-    <h2 :class="titleClass + ' font-fa-num'">{{ title }}</h2>
-    <Button v-if="showMoreLink" variant="link" :to="showMoreLink" class="pl-0" :class="showMoreClass">
+    <div class="flex items-center gap-2">
+      <h2 :class="titleClass + ' font-fa-num'">{{ title }}</h2>
+      <span v-if="titleBadge" class="title-badge" :class="titleBadgeClass">
+      {{ titleBadge }}
+      </span>
+    </div>
+    <slot name="right-content"></slot>
+    <Button v-if="showMoreLink" variant="link" :to="showMoreLink" class="pl-0" :class="showMoreClass" size="sm">
       {{ showMoreText }}
       <Icon name="heroicons:arrow-left" class="ms-1" />
     </Button>

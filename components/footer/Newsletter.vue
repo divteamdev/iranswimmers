@@ -9,7 +9,7 @@
     </h6>
     <div class="flex gap-2">
       <Input class="bg-muted text-muted-foreground body-4" placeholder="ایمیل خود را وارد کنید"/>
-      <Button size="sm" class="w-fit">
+      <Button size="sm" class="w-fit h-auto">
         <span class="body-4">عضو شوید</span>
       </Button>
     </div>

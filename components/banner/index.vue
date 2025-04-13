@@ -69,6 +69,8 @@ const variantClasses = computed(() => {
       cn(
         variantClasses.container, containerClass,
       )">
+
+      <slot></slot>
     <img
         :src="src"
         :alt="alt"

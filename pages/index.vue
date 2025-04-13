@@ -1,4 +1,5 @@
 <script setup>
+import { HomeSectionSpecialProducts } from '#components';
 import {useHomeStore} from '~/stores/homeStore';
 
 const homeStore = useHomeStore();
@@ -40,8 +41,8 @@ const productTabs = computed(() => [
 
     <home-section-on-sale :carousel="homeStore.onSaleCarousel"/>
 
-    <HomeSectionImageOnTop :carousel="homeStore.carousel1"
-     banner="/images/home-banners/swim-glasses.webp"/>
+
+     <HomeSectionSpecialProducts :carousel="homeStore.carousel1" banner="/images/home-banners/swim-glasses.webp" variant="primary"/>
 
     <HomeSectionTabProducts
         :tabs="productTabs"
@@ -52,11 +53,11 @@ const productTabs = computed(() => [
     banner-mobile="/images/home-banners/banner-6-mobile.webp"
     banner="/images/home-banners/banner-6.webp"/>
 
-    <HomeSectionImageOnRight :carousel="homeStore.carousel5" banner="/images/home-banners/image-on-right.webp"/>
+    <HomeSectionSpecialProducts :carousel="homeStore.carousel5" banner="/images/home-banners/image-on-right.webp" variant="secondary"/>
 
     <HomeSectionBannerOnRight :carousel="homeStore.carousel2" banner="/images/home-banners/banner-9.webp"/>
 
-    <HomeSectionGrid :grid="homeStore.carousel2" banner="/images/home-banners/banner-13.webp"/>
+    <HomeSectionGrid :grid="homeStore.carousel2" banner="/images/home-banners/grid-banner.webp"/>
   </div>
 
 </template>

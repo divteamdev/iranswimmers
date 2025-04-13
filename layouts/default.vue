@@ -7,7 +7,8 @@
   <main class="py-8">
     <NuxtPage/>
   </main>
-  <Footer/>
+  <Footer class="pb-16 lg:pb-0"/>
+  <BottomNavigation/>
 </template>
 
 <style scoped>

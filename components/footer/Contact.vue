@@ -6,7 +6,7 @@ interface Social {
   icon: string;
   link: string;
   color: string;
-  logoColor: string;
+  iconColor: string;
   hoverColor: string;
 }
 
@@ -16,7 +16,7 @@ const socials = [
     icon: 'hugeicons:instagram',
     link: 'https://www.instagram.com/iranswimmers/',
     color: 'bg-[#BD69FF0F]',
-    logoColor: 'text-[#FF6969]',
+    iconColor: 'text-[#FF6969]',
     hoverColor: 'hover:bg-[#BD69FF3F]',
   },
   {
@@ -24,7 +24,7 @@ const socials = [
     icon: 'hugeicons:telegram',
     link: 'https://t.me/iranswimmers',
     color: 'bg-[#4FA2FF0F]',
-    logoColor: 'text-[#4FA2FF]',
+    iconColor: 'text-[#4FA2FF]',
     hoverColor: 'hover:bg-[#4FA2FF3F]',
   },
   {
@@ -32,7 +32,7 @@ const socials = [
     icon: 'hugeicons:whatsapp',
     link: 'https://wa.me/+989015521838',
     color: 'bg-[#19AE190F]',
-    logoColor: 'text-[#19AE19]',
+    iconColor: 'text-[#19AE19]',
     hoverColor: 'hover:bg-[#19AE193F]',
   },
 ]
@@ -42,8 +42,8 @@ const getSocialButtonClasses = (social: Social) => {
   return cn(
       'text-xl',
       social.color,
-      social.logoColor,
-      `${social.hoverColor} hover:text-[${social.logoColor}]`,
+      social.iconColor,
+      `${social.hoverColor} hover:text-[${social.iconColor}]`,
   )
 }
 </script>

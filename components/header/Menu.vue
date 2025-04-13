@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// Move menu items outside of component setup for better caching
+// Define menu items outside for better performance
 const menuItems = [
   {
     name: 'صفحه نخست',
@@ -26,25 +26,35 @@ const menuItems = [
     color: 'text-primary',
   },
 ] as const;
+
+defineProps<{
+  isMobile?: boolean
+}>()
 </script>
 
 <template>
-  <div class="flex items-center gap-4">
-    <Button variant="secondary" size="lg" class="font-fa-num" to="/shop">
+  <div class="flex flex-col gap-4 md:flex-row md:items-center">
+    <Button 
+      variant="secondary" 
+      class="font-fa-num justify-start" 
+      to="/shop"
+      size="lg"
+    >
       <Icon name="hugeicons:menu-01" class="text-lg"/>
-      دسته‌بندی محصولات
+      <span class="hidden lg:block">دسته‌بندی محصولات</span>
+      <span class="block lg:hidden">فهرست</span>
     </Button>
 
-    <nav>
-      <ul class="flex items-center justify-between">
+    <nav class="w-full">
+      <ul class="hidden lg:flex md:items-center md:justify-between">
         <HeaderItem
-            v-for="item in menuItems"
-            :key="item.to"
-            :name="item.name"
-            :icon="item.icon"
-            :icon-color="item.color"
-            :to="item.to"
-            class="border-l border-l-border h-4 last:border-l-0"
+          v-for="item in menuItems"
+          :key="item.to"
+          :name="item.name"
+          :icon="item.icon"
+          :icon-color="item.color"
+          :to="item.to"
+          :class="isMobile ? 'py-2 border-b border-border' : 'border-l border-l-border h-4 last:border-l-0'"
         />
       </ul>
     </nav>

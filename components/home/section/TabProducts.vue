@@ -67,17 +67,21 @@ const { isMobile } = useDeviceDetection();
 <template>
   <section class="irsm-container mb-24" dir="rtl">
 
-    <div class="flex gap-4 max-h-[300px] md:max-h-full">
+    <div class="flex gap-4 h-auto md:max-h-full">
+
+      <div class="w-full h-auto hidden md:block">
       <!-- Banner Image -->
-      <Banner :src="banner" :alt="bannerAlt" variant="primary" class="hidden md:block" container-class="w-full h-full"
+      <Banner :src="banner" :alt="bannerAlt" variant="primary" container-class="w-full h-full"
         image-class="w-full h-full object-cover" />
+      </div>
+
 
 
       <!-- Tab Content -->
-      <div class="flex flex-col w-full md:w-[74%] xl:w-[80%] 2xl:w-[82%]">
+      <div class="flex flex-col w-full md:w-[75%] lg:w-[80%] 2xl:w-[85%]">
         <!-- Tab Navigation -->
-        <div class="flex items-center justify-between mb-6">
-          <div class="flex gap-2 items-center">
+        <div class="flex items-center justify-between mb-4 md:mb-6 flex-col md:flex-row">
+          <div class="flex gap-2 items-center justify-start w-full mb-4 md:mb-0">
             <template v-for="(tab, index) in tabs" :key="index">
               <Button size="sm" :variant="activeTabId === tab.id ? 'default' : 'ghost'" @click="setActiveTab(tab.id)">
                 {{ tab.title }}
@@ -86,16 +90,21 @@ const { isMobile } = useDeviceDetection();
             </template>
           </div>
 
-          <Button v-if="getActiveTab?.all" variant="link" :to="getActiveTab.all" class="pl-0">
-            مشاهده همه {{ getActiveTitle }}
-            <Icon name="heroicons:arrow-left" class="ms-1" />
-          </Button>
+          <div class="flex items-center justify-between w-full md:justify-end">
+            <h3 class="heading-6 md:hidden">{{ getActiveTitle }}</h3>
+            <Button v-if="getActiveTab?.all" variant="link" :to="getActiveTab.all" class="pl-0" size="sm">
+              مشاهده همه {{ getActiveTitle }}
+              <Icon name="heroicons:arrow-left" class="ms-1" />
+            </Button>
+          </div>
+
+
         </div>
 
         <!-- Active Tab Carousel -->
         <template v-if="getActiveTab">
-          <ProductCarousel :products="getActiveTab.products" class="h-full" :loop="false"
-            carousel-item-class="basis-1/2 md:basis-[26.5%] lg:basis-[24.5%] xl:basis-[auto]">
+          <ProductCarousel :products="getActiveTab.products" :loop="false" class="min-h-[310px] h-full"
+            carousel-item-class="basis-auto md:basis-[26.5%] lg:basis-[24.5%] xl:basis-[auto]">
             <template v-if="isMobile" #banner-placeholder>
               <Banner :src="bannerMobile" :alt="bannerMobileAlt" variant="primary"
                 container-class="w-full h-full basis-auto min-w-[140px] ml-4"
