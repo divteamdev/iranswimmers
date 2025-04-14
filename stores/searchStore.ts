@@ -80,13 +80,11 @@ export const useSearchStore = defineStore('searchStore', () => {
                 searchError.value = error as Error;
                 searchResults.value = [];
             } else {
-                // Extract products from the data structure
                 searchResults.value = data?.data?.products || [];
             }
         } catch (err) {
             searchError.value = err as Error;
             searchResults.value = [];
-            console.error('Error performing search:', err);
         } finally {
             isSearching.value = false;
         }
@@ -109,13 +107,11 @@ export const useSearchStore = defineStore('searchStore', () => {
                 fullSearchError.value = error as Error;
                 fullSearchResults.value = [];
             } else {
-                // Extract products from the data structure
                 fullSearchResults.value = data?.data?.products || [];
             }
         } catch (err) {
             fullSearchError.value = err as Error;
             fullSearchResults.value = [];
-            console.error('Error performing full search:', err);
         } finally {
             isFullSearching.value = false;
         }
@@ -128,7 +124,6 @@ export const useSearchStore = defineStore('searchStore', () => {
         searchResults.value = [];
         searchError.value = null;
         
-        // Also clear global search query
         if (globalSearchQuery.value !== '') {
             globalSearchQuery.value = '';
         }
@@ -142,8 +137,6 @@ export const useSearchStore = defineStore('searchStore', () => {
     };
     
     // Sync with global search query from composable
-    // This watch must be AFTER all the functions are defined to avoid the
-    // "Cannot access lexical declaration before initialization" error
     watch(globalSearchQuery, (newQuery) => {
         if (localSearchQuery.value !== newQuery) {
             setSearchQuery(newQuery);
