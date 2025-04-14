@@ -86,9 +86,9 @@ const scrollPrev = () => {
             <template #end-item>
               <Card :to="carousel.all"
                 class="h-full flex items-center justify-center bg-secondary/10 hover:bg-secondary/15 transition-colors duration-300">
-                <span class="body-1 flex items-center gap-2 text-background md:text-secondary">
+                <span class="body-2 flex items-center gap-2 text-background md:text-secondary">
                   مشاهده همه
-                  <Icon name="heroicons:arrow-left" class="text-background md:text-secondary text-2xl" />
+                  <Icon name="heroicons:arrow-left" class="text-background md:text-secondary text-lg" />
                 </span>
               </Card>
             </template>
