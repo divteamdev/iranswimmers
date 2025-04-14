@@ -52,35 +52,33 @@ watch(() => props.query, (newQuery) => {
   }
 });
 
-// Handle product click - navigate to product page
+// Navigate to product page
 const handleProductClick = (product: SearchProduct): void => {
   navigateTo(`/product/${product.slug}`);
 };
 
 // Navigate to full search page with current query
 const navigateToFullSearch = () => {
-  // Navigate to search page with query and trailing slash
   router.push({
     path: '/search/',
     query: { q: displayQuery.value }
   });
   
-  // Close the search component after 200ms delay (only on search page)
   setTimeout(() => {
-    closeSearch(); // Close the search dropdown
+    closeSearch();
   }, 200);
 };
 </script>
 
 <template>
-  <div class="w-full" dir="rtl">
+  <div class="w-full " dir="rtl">
     <!-- Query info when has results -->
     <div v-if="hasSearched && hasResults" class="mb-3 flex justify-between items-center">
-      <p class="text-sm text-muted-foreground">جستجو برای: "{{ displayQuery }}"</p>
+      <p class="body-4 text-muted-foreground">جستجو برای: "{{ displayQuery }}"</p>
       <Button 
         variant="link"
         @click="navigateToFullSearch"
-        class="text-sm text-primary hover:underline transition-all"
+        class="body-4"
       >
         مشاهده همه نتایج
       </Button>
@@ -89,7 +87,6 @@ const navigateToFullSearch = () => {
     <!-- Loading state -->
     <div v-if="isLoading" class="py-4">
       <p class="text-center text-muted-foreground body-3">در حال جستجو...</p>
-      <!-- Optional: Add a spinner here -->
     </div>
 
     <!-- Error state -->
@@ -103,7 +100,7 @@ const navigateToFullSearch = () => {
     </div>
 
     <!-- Results -->
-    <div v-else-if="hasResults" class="py-2">
+    <div v-else-if="hasResults" class="py-2 overflow-y-auto max-h-[60vh]">
       <ul class="space-y-2">
         <li v-for="(product, index) in searchResults" :key="index">
           <ProductMiniCard 
@@ -113,7 +110,6 @@ const navigateToFullSearch = () => {
         </li>
       </ul>
       
-      <!-- "See all results" button after results -->
       <div class="mt-4 text-center">
         <Button 
           variant="ghost"
