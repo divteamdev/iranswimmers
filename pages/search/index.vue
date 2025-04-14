@@ -7,12 +7,12 @@ import { useSearch } from '~/composables/useSearch';
 const route = useRoute();
 const router = useRouter();
 const searchStore = useSearchStore();
-const { setSearchQuerySilently, isSearchPage } = useSearch();
+const { setSearchQuerySilently } = useSearch();
 
-// Get query from route (ensure it's properly formatted)
+// Get query from route
 const searchQuery = computed(() => route.query.q as string || '');
 
-// Search results from fullSearch functionality
+// Search state
 const isLoading = computed(() => searchStore.isFullSearching);
 const results = computed(() => searchStore.fullSearchResults);
 const error = computed(() => searchStore.fullSearchError);
@@ -21,9 +21,7 @@ const hasResults = computed(() => searchStore.hasFullResults);
 // Execute search when query changes
 watch(searchQuery, (newQuery) => {
   if (newQuery) {
-    // Update the global search query silently (without affecting hash)
     setSearchQuerySilently(newQuery);
-    // Perform the full search
     searchStore.performFullSearch(newQuery);
   } else {
     searchStore.clearFullSearch();
@@ -32,7 +30,6 @@ watch(searchQuery, (newQuery) => {
 
 // Ensure URL formatting is correct (e.g., /search/?q=query)
 onMounted(() => {
-  // If we're at /search without a trailing slash, redirect to /search/
   if (route.path === '/search' && !route.path.endsWith('/')) {
     router.replace({
       path: '/search/',
