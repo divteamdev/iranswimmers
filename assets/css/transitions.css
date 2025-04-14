@@ -33,3 +33,65 @@
     opacity: 0;
     transform: translate(30px, 0);
 }
+
+/* Sheet Transitions */
+.sheet-right-enter-active,
+.sheet-right-leave-active,
+.sheet-left-enter-active,
+.sheet-left-leave-active,
+.sheet-top-enter-active,
+.sheet-top-leave-active,
+.sheet-bottom-enter-active,
+.sheet-bottom-leave-active {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Right side sheet */
+.sheet-right-enter-from {
+    transform: translateX(100%);
+    opacity: 0;
+}
+.sheet-right-leave-to {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+/* Left side sheet */
+.sheet-left-enter-from {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+.sheet-left-leave-to {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+/* Top sheet */
+.sheet-top-enter-from {
+    transform: translateY(-100%);
+    opacity: 0;
+}
+.sheet-top-leave-to {
+    transform: translateY(-100%);
+    opacity: 0;
+}
+
+/* Bottom sheet */
+.sheet-bottom-enter-from {
+    transform: translateY(100%);
+    opacity: 0;
+}
+.sheet-bottom-leave-to {
+    transform: translateY(100%);
+    opacity: 0;
+}
+
+/* Fade transition for overlay */
+.sheet-overlay-enter-active,
+.sheet-overlay-leave-active {
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.sheet-overlay-enter-from,
+.sheet-overlay-leave-to {
+    opacity: 0;
+}

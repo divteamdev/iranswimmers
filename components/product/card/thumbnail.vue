@@ -152,7 +152,7 @@ const hasSecondaryImage = computed(() => {
     <div
         v-if="(!thumbnailSrc) || (primaryImageError.value && (secondaryImageError.value || !props.secondaryImage?.path))"
         class="w-full h-full flex items-center justify-center text-muted-foreground bg-background">
-      No image
+      <Icon name="hugeicons:image-not-found-02" class="text-muted-foreground text-xl" />
     </div>
 
     <!-- Optional badges can be added here through slots -->

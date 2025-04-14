@@ -93,9 +93,8 @@ const handleScroll = useDebounceFn(() => {
 
 // Computed styles
 const headerClasses = computed(() => ({
-  'sticky top-0': !headerState.isAtTop,
-  'relative': headerState.isAtTop,
-  'h-auto': true
+  'sticky top-0 -translate-y-[80%]': !headerState.isAtTop,
+  'relative h-max': headerState.isAtTop,
 }))
 
 const headerZIndex = computed(() => ({
@@ -121,7 +120,7 @@ const secondLayerClasses = computed(() => {
     'transform transition-transform duration-300': true,
     'translate-y-0': headerState.isAtTop,
     '-translate-y-12': headerState.isScrollingUp,
-    '-translate-y-[150%]': !headerState.isAtTop && !headerState.isScrollingUp
+    'translate-y-[130%]': !headerState.isAtTop && !headerState.isScrollingUp
   }
 })
 
@@ -136,8 +135,7 @@ const thirdLayerClasses = computed(() => {
   return {
     'transform transition-transform duration-300': true,
     'translate-y-0': headerState.isAtTop,
-    '-translate-y-[200%]': !headerState.isAtTop && headerState.isScrollingUp,
-    '-translate-y-[180%]': !headerState.isAtTop && !headerState.isScrollingUp
+    'translate-y-[40%]': !headerState.isAtTop,
   }
 })
 
