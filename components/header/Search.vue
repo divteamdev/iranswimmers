@@ -26,8 +26,6 @@ watch(() => route.query.q, (newQuery) => {
 // Handle clicks on the search input div
 const handleSearchClick = () => {
   if (typeof window !== 'undefined') {
-    const currentPath = window.location.pathname + window.location.search + '#search';
-    router.push(currentPath);
     
     setTimeout(() => {
       handleInputFocus();
