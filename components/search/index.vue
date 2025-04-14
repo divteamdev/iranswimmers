@@ -1,30 +1,96 @@
 <script lang="ts" setup>
 import { useSearch } from '~/composables/useSearch';
-import { computed, onMounted, ref, onBeforeUnmount } from 'vue';
+import { computed, onMounted, ref, onBeforeUnmount, watch, nextTick } from 'vue';
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
-  SheetClose,
-  SheetFooter,
-  SheetOverlay,
 } from '~/components/ui/sheet';
 
-import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
+import SearchContent from '~/components/search/SearchContent.vue';
+import { useRouter, useRoute } from 'vue-router';
 
-const { searchQuery, isActive, closeSearch } = useSearch();
+const router = useRouter();
+const route = useRoute();
+const { searchQuery, isActive, closeSearch, isSearchPage, handleButtonClick, setSearchQuerySilently } = useSearch();
 const hasQuery = computed(() => searchQuery.value && searchQuery.value.length > 0);
 const { isMobile } = useDeviceDetection();
 const mobileInputRef = ref<HTMLInputElement | null>(null);
+const desktopInputRef = ref<HTMLInputElement | null>(null);
+const searchContainerRef = ref<HTMLElement | null>(null);
 
 // Create a computed property for isActive
 const computedIsActive = computed(() => isActive.value);
 
 // Handle when sheet is closed manually
 const handleSheetClose = () => {
+  removeHashAndCloseSearch();
+};
+
+// Prevent propagation when clicking inside search component
+const stopPropagation = (event: MouseEvent) => {
+  event.stopPropagation();
+};
+
+// Remove #search from URL and close search component
+const removeHashAndCloseSearch = () => {
+  // Remove #search from URL
+  if (typeof window !== 'undefined' && window.location.hash === '#search') {
+    const currentPath = window.location.pathname + window.location.search;
+    router.replace(currentPath);
+  }
+  
+  // Clear query if not on search page
+  if (!isSearchPage()) {
+    searchQuery.value = '';
+  }
+  
+  // Close the search component
   closeSearch();
+};
+
+// Handle click outside
+const handleClickOutside = (event: MouseEvent) => {
+  if (searchContainerRef.value && !searchContainerRef.value.contains(event.target as Node) && isActive.value) {
+    removeHashAndCloseSearch();
+  }
+};
+
+// Navigate to search page
+const navigateToSearchPage = () => {
+  if (searchQuery.value.trim()) {
+    const query = searchQuery.value;
+    
+    router.push({
+      path: '/search/',
+      query: { q: query }
+    });
+    
+    // Set a timeout to close the search component after navigation
+    setTimeout(() => {
+      removeHashAndCloseSearch();
+      
+      // If we're on the search page, update the query silently
+      if (isSearchPage()) {
+        setSearchQuerySilently(query);
+      }
+    }, 200);
+  }
+};
+
+// Handle keyboard events
+const handleKeyDown = (event: KeyboardEvent) => {
+  if (isActive.value) {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      removeHashAndCloseSearch();
+    } else if (event.key === 'Enter' && searchQuery.value.trim()) {
+      event.preventDefault();
+      navigateToSearchPage();
+    }
+  }
 };
 
 // Focus the mobile input when the sheet opens
@@ -36,6 +102,67 @@ const onSheetAfterEnter = () => {
   }
 };
 
+// Focus the desktop input when search becomes active
+watch(computedIsActive, (newValue) => {
+  if (newValue && !isMobile && desktopInputRef.value) {
+    setTimeout(() => {
+      desktopInputRef.value?.focus();
+    }, 100);
+  }
+});
+
+// Handle search button click
+const onSearchButtonClick = () => {
+  if (hasQuery.value) {
+    navigateToSearchPage();
+  } else {
+    handleButtonClick();
+  }
+};
+
+// Add a direct route change listener to absolutely ensure search closes on navigation
+onMounted(() => {
+  // Watch for route changes to close search when navigating
+  const removeRouteListener = router.afterEach((to, from) => {
+    // If navigating to a non-search page, close search
+    if (to.path !== from.path && !to.path.startsWith('/search')) {
+      if (isActive.value) {
+        removeHashAndCloseSearch();
+      }
+    }
+    
+    // If navigating to search page, update query from URL
+    if (to.path.startsWith('/search') && to.query.q) {
+      const query = to.query.q as string;
+      setSearchQuerySilently(query);
+    }
+  });
+
+  // Add click outside and keyboard listeners
+  document.addEventListener('click', handleClickOutside);
+  document.addEventListener('keydown', handleKeyDown);
+
+  // Clean up route listener
+  onBeforeUnmount(() => {
+    removeRouteListener();
+    document.removeEventListener('click', handleClickOutside);
+    document.removeEventListener('keydown', handleKeyDown);
+  });
+});
+
+// Watch hash changes to ensure search component activates
+watch(() => route.hash, (newHash) => {
+  if (newHash === '#search' && !isActive.value) {
+    nextTick(() => {
+      isActive.value = true;
+    });
+  } else if (newHash !== '#search' && isActive.value) {
+    nextTick(() => {
+      closeSearch();
+    });
+  }
+}, { immediate: true });
+
 // Enhanced function to restore pointer events
 const restorePointerEvents = () => {
   if (typeof document !== 'undefined') {
@@ -46,75 +173,68 @@ const restorePointerEvents = () => {
 // Make sure to clean up regardless of component lifecycle
 onBeforeUnmount(() => {
   restorePointerEvents();
+  document.removeEventListener('click', handleClickOutside);
+  document.removeEventListener('keydown', handleKeyDown);
 });
 </script>
 
 <template>
-  <!-- Desktop search dropdown -->
+  <!-- Desktop search dropdown - only show if not on search page or if force-showing -->
   <div v-if="!isMobile && computedIsActive"
-    class="absolute top-full left-0 right-0 z-50 bg-background border border-border border-t-0 rounded-b-lg shadow-lg p-4 max-h-[80vh] overflow-y-auto">
-    <div v-if="hasQuery" class="py-2">
-      <p class="text-sm text-muted-foreground mb-2">جستجو برای: "{{ searchQuery }}"</p>
-      <div class="space-y-2">
-        <!-- Search results would go here -->
-        <p class="text-center text-muted-foreground" v-if="true">در حال بارگذاری نتایج...</p>
-      </div>
+    ref="searchContainerRef"
+    class="absolute -top-2 -left-2 -right-2 z-50 bg-background border border-border border-t-0 rounded-b-lg shadow-lg p-2 max-h-[80vh] overflow-y-auto"
+    @click="stopPropagation">
+    
+    <!-- Desktop search input -->
+    <div class="flex mb-4 relative" dir="rtl">
+      <Input 
+        ref="desktopInputRef"
+        v-model="searchQuery" 
+        placeholder="عبارت مورد نظر خود را وارد کنید..."
+        class="grow h-12 rounded-l-none rounded-r-xl bg-muted/50" 
+        autofocus 
+        @keydown.enter="navigateToSearchPage"
+        @keydown.esc="removeHashAndCloseSearch"
+      />
+      <!-- Search button -->
+      <Button 
+        variant="default" 
+        :size="isMobile ? 'icon' : 'icon-lg'" 
+        :class="['rounded-r-none h-10 w-10 md:h-12 md:w-12']"
+        @click="onSearchButtonClick">
+        <Icon name="hugeicons:search-01" class="text-primary-foreground text-2xl" />
+      </Button>
     </div>
-    <div v-else class="py-2">
-      <p class="text-center text-muted-foreground">لطفا عبارت مورد نظر خود را برای جستجو وارد کنید</p>
-    </div>
+
+    <!-- Search results -->
+    <SearchContent :query="searchQuery" />
   </div>
 
   <!-- Mobile search sheet -->
-  <Sheet 
-    :modal="false" 
-    @close="handleSheetClose" 
-    @after-leave="restorePointerEvents"
-    :open="computedIsActive && isMobile" 
+  <Sheet :modal="false" @after-leave="restorePointerEvents" :open="computedIsActive && isMobile"
     @after-enter="onSheetAfterEnter">
-    <SheetContent  side="bottom" class="h-full px-4 pt-6 pb-4 flex flex-col">
-      <SheetHeader class="mb-4">
+    <SheetContent side="bottom" class="h-full px-4 pt-6 pb-4 flex flex-col" @close="handleSheetClose">
+      <SheetHeader>
         <SheetTitle>جستجو</SheetTitle>
       </SheetHeader>
-      
-      <!-- Mobile search input -->
-      <div class="flex mb-4">
-        <Input
-          ref="mobileInputRef"
-          v-model="searchQuery"
-          placeholder="عبارت مورد نظر خود را وارد کنید..."
-          class="grow h-12 rounded-l-none rounded-r-xl bg-muted"
-          autofocus
-        />
-        <Button
-          variant="default"
-          size="icon-lg"
-          class="rounded-r-none h-12 w-12"
-          :class="{ 'bg-primary-focus': hasQuery }"
-        >
-          <Icon name="hugeicons:search-01" class="text-primary-foreground text-2xl" />
-        </Button>
-      </div>
 
+      <!-- Mobile search input -->
+      <div class="flex mb-4 relative" dir="rtl">
+        <Input 
+          ref="mobileInputRef" 
+          v-model="searchQuery" 
+          placeholder="عبارت مورد نظر خود را وارد کنید..."
+          class="grow h-12 rounded-xl bg-muted" 
+          autofocus 
+          @keydown.enter="navigateToSearchPage"
+          @keydown.esc="removeHashAndCloseSearch"
+        />
+        <Icon name="hugeicons:search-01" class="text-primary text-2xl absolute left-2 top-1/2 -translate-y-1/2" />
+      </div>
       <!-- Search results area -->
       <div class="flex-grow overflow-y-auto">
-        <div v-if="hasQuery">
-          <p class="text-sm text-muted-foreground mb-4">جستجو برای: "{{ searchQuery }}"</p>
-          <div class="space-y-4">
-            <!-- Empty state - replace with actual results -->
-            <p class="text-center text-muted-foreground py-8">در حال بارگذاری نتایج...</p>
-          </div>
-        </div>
-        <div v-else>
-          <p class="text-center text-muted-foreground py-12">لطفا عبارت مورد نظر خود را برای جستجو وارد کنید</p>
-        </div>
+        <SearchContent :query="searchQuery" />
       </div>
-
-      <SheetFooter class="mt-4">
-        <SheetClose asChild>
-          <Button @click="closeSearch" class="w-full">بستن</Button>
-        </SheetClose>
-      </SheetFooter>
     </SheetContent>
   </Sheet>
 </template>
