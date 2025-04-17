@@ -78,25 +78,21 @@
     /* Small mobile screen */
     --screen-max: 1536px;
     /* 2XL breakpoint */
-
     /* Fluid Typography Scale using calc and clamp for automatic scaling */
-
-    --fluid-h1: clamp(2.25rem, 1.35rem + 4.5vw, 4rem);
-    /* ~36px to 64px */
-    --fluid-h2: clamp(1.875rem, 1.2rem + 3.4vw, 3.5rem);
-    /* ~30px to 56px */
-    --fluid-h3: clamp(1.5rem, 1rem + 2.5vw, 3rem);
-    /* ~24px to 48px */
-    --fluid-h4: clamp(1.25rem, 0.9rem + 1.8vw, 1.75rem);
-    /* ~20px to 36px */
+    --fluid-h1: clamp(1.4rem, 1.3rem + 2vw, 2rem);
+    /* ~28px to 35px */
+    --fluid-h2: clamp(1.35rem, 1.25rem + 1.8vw, 1.8rem);
+    /* ~24px to 40px */
+    --fluid-h3: clamp(1.3rem, 1rem + 1.8vw, 1.6rem);
+    /* ~20px to 48px */
+    --fluid-h4: clamp(1.25rem, 0.9rem + 1.8vw, 1.4rem);
+    /* ~20px to 28px */
     --fluid-h5: clamp(1.125rem, 0.85rem + 1.4vw, 1.15rem);
     /* ~18px to 28px */
     --fluid-h6: clamp(0.875rem, 0.7rem + 0.8vw, 1rem);
     /* ~14px to 18px */
-    
     /* Body Text */
-    
-    --fluid-body-1: clamp(1.125rem, 0.95rem + 0.9vw, 1.5rem);
+    --fluid-body-1: clamp(1.125rem, 0.95rem + 0.8vw, 1.25rem);
     /* ~18px to 24px */
     --fluid-body-2: clamp(0.975rem, 0.875rem + 0.3vw, 1.125rem);
     /* ~15px to 17px */
@@ -104,7 +100,6 @@
     /* ~14px to 15px */
     --fluid-body-4: clamp(0.8rem, 0.7rem + 0.25vw, 0.825rem);
     /* ~12px to 13px */
-
     /* Display Text */
     --fluid-display-1: clamp(2.5rem, 1.2rem + 6.5vw, 5rem);
     /* ~40px to 80px */
@@ -122,7 +117,7 @@
     .heading-1 {
         font-family: var(--font-fa-num);
         font-size: var(--fluid-h1);
-        font-weight: 700;
+        font-weight: 600;
         line-height: 1.1;
     }
 
@@ -166,7 +161,7 @@
         .md\:heading-1 {
             font-family: var(--font-fa-num);
             font-size: var(--fluid-h1);
-            font-weight: 700;
+            font-weight: 600;
             line-height: 1.1;
         }
 
@@ -210,7 +205,7 @@
         .lg\:heading-1 {
             font-family: var(--font-fa-num);
             font-size: var(--fluid-h1);
-            font-weight: 700;
+            font-weight: 600;
             line-height: 1.1;
         }
 
@@ -254,7 +249,7 @@
         .xl\:heading-1 {
             font-family: var(--font-fa-num);
             font-size: var(--fluid-h1);
-            font-weight: 700;
+            font-weight: 600;
             line-height: 1.1;
         }
 
@@ -298,7 +293,7 @@
         .\2xl\:heading-1 {
             font-family: var(--font-fa-num);
             font-size: var(--fluid-h1);
-            font-weight: 700;
+            font-weight: 600;
             line-height: 1.1;
         }
 
@@ -343,6 +338,7 @@
         font-family: var(--font-fa-num);
         font-size: var(--fluid-body-1);
         line-height: 1.5;
+        font-weight: 500;
     }
 
     .body-2 {
