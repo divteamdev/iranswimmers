@@ -8,23 +8,23 @@
       },
       {
         "text": "پنل کاربری",
-        "link": "/dashboard"
+        "link": "/user"
       },
       {
         "text": "سبد خرید",
-        "link": "/cart"
+        "link": "/checkout/cart"
       },
       {
         "text": "راهنمای خرید",
-        "link": "/purchase-guide"
+        "link": "/"
       },
       {
         "text": "نحوه پرداخت",
-        "link": "/payment-guide"
+        "link": "/"
       },
       {
         "text": "درباره ما",
-        "link": "/about"
+        "link": "/about-us"
       }
     ]
   }

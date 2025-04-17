@@ -14,7 +14,7 @@ export function formatPrice(price: number | string): string {
     if (isNaN(numericPrice)) return '';
 
     // Round to remove decimal places and format with commas
-    return Math.round(numericPrice).toLocaleString('en-US');
+    return Math.round(numericPrice).toLocaleString('fa-IR');
 }
 
 /**

@@ -1,27 +1,24 @@
-<script setup>
+<script setup lang="ts">
 import {convertImageUrl} from "~/helpers/imageUtils";
-import {ref} from 'vue';
+import {ref, computed} from 'vue';
 import {Skeleton} from "~/components/ui/skeleton/index.js";
 
-const props = defineProps({
-  primaryImage: {
-    type: Object,
-    required: true,
-    default: null
-  },
-  secondaryImage: {
-    type: Object,
-    default: null
-  },
-  alt: {
-    type: String,
-  },
-  aspectRatio: {
-    type: String,
-    default: "square", // Options: "square", "portrait", "landscape"
-  }
-});
+// Define interfaces for image objects
+interface ImageObject {
+  path?: string;
+  name?: string;
+}
 
+// Define props with TypeScript
+const props = withDefaults(defineProps<{
+  primaryImage: ImageObject | null;
+  secondaryImage?: ImageObject | null;
+  alt?: string;
+  aspectRatio?: "square" | "portrait" | "landscape";
+}>(), {
+  secondaryImage: null,
+  aspectRatio: "square"
+});
 
 // Track image loading state
 const primaryImageError = ref(false);

@@ -15,17 +15,19 @@ export const buttonVariants = cva(
           'border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
         secondary:
           'bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80',
+        accent:
+            'bg-background text-foreground shadow-xs hover:bg-background/80',
         ghost:
           'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
         link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
-        default: 'h-9 px-4 py-2',
+        default: 'h-9 px-4 py-2 button-text-1',
         sm: 'h-8 rounded-md gap-1.5 px-3 button-text-2',
         lg: 'h-12 rounded-xl button-text-1 px-4 [&_.iconify]:text-xl has-[>.iconify]:px-3.5',
         xl: 'h-12 rounded-md px-8 text-xl',
         'icon-sm': '[&_.iconify]:text-lg rounded text-base aspect-square h-6 w-6',
-        icon: 'size-9 rounded-xl',
+        icon: 'size-9 rounded-md',
         'icon-lg': 'h-12 w-12 aspect-square [&_.iconify]:text-2xl rounded-xl',
         'icon-xl': 'h-12 w-12 aspect-square text-xl',
       },

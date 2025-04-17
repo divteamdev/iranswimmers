@@ -46,7 +46,7 @@ const handleSearchButtonClick = () => {
       class="grow h-10 md:h-12 rounded-l-none rounded-r-xl bg-muted md:bg-muted/50 border border-input px-3 py-2 text-sm flex items-center cursor-text"
       @click="handleSearchClick"
       :class="{ 'ring-2 ring-primary': isSearchActive }">
-      <span v-if="!searchQuery" class="text-muted-foreground">
+      <span v-if="!searchQuery" class="text-muted-foreground body-3">
         مدویو، عینک شنا، جمر،مایو اقتصادی و ...
       </span>
       <span v-else class="body-3">
