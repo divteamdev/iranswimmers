@@ -25,7 +25,7 @@ const products = computed(() => productStore.products || []);
       :products="products"
       :isLoading="isLoading || productStore.isLoading"
       :error="productStore.error"
-      gridClass="grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+      gridClass="grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
       gap="gap-6"
     />
   </div>
