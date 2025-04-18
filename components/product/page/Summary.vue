@@ -1,5 +1,5 @@
 <script setup>
-import {computed, ref, onMounted, watch} from "vue";
+import {computed, ref, onMounted, watch, nextTick} from "vue";
 import {useProductStore} from "~/stores/product";
 
 const productStore = useProductStore();
@@ -8,7 +8,8 @@ const isExpanded = ref(false);
 const hasMoreItems = ref(false);
 const contentRef = ref(null);
 const contentHeight = ref('auto');
-const collapsedHeight = ref('110px'); // Default collapsed height
+const collapsedHeight = ref('110px'); // Will be calculated dynamically
+const maxVisibleItems = 3; // Number of items to show when collapsed
 
 // Parse and process the HTML content
 const processedHtml = computed(() => {
@@ -16,32 +17,45 @@ const processedHtml = computed(() => {
 });
 
 onMounted(() => {
-  // Check if content needs the expander
-  if (contentRef.value) {
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = processedHtml.value;
-    const items = tempDiv.querySelectorAll('li');
-    hasMoreItems.value = items.length > 4;
-
-    // Set initial height
-    updateHeight();
-  }
+  nextTick(() => {
+    calculateCollapsedHeight();
+  });
 });
 
-const updateHeight = () => {
+const calculateCollapsedHeight = () => {
   if (!contentRef.value) return;
 
-  if (isExpanded.value) {
-    // Get the full height when expanded
-    contentRef.value.style.height = 'auto';
-    contentHeight.value = `${contentRef.value.scrollHeight}px`;
-    contentRef.value.style.height = contentHeight.value;
-  } else {
-    // Measure the full height first to enable animation
-    contentRef.value.style.height = 'auto';
-    const fullHeight = contentRef.value.scrollHeight;
+  // First make the content fully visible to measure it
+  contentRef.value.style.height = 'auto';
 
-    // Force collapsed height
+  // Find all list items
+  const items = contentRef.value.querySelectorAll('li, .brand-item');
+  hasMoreItems.value = items.length > maxVisibleItems;
+
+  if (hasMoreItems.value) {
+    // If we have more than maxVisibleItems
+    if (items.length >= maxVisibleItems) {
+      let totalHeight = 0;
+
+      // Calculate height of the first maxVisibleItems
+      for (let i = 0; i < maxVisibleItems; i++) {
+        if (items[i]) {
+          const itemHeight = items[i].offsetHeight;
+          const marginBottom = parseInt(window.getComputedStyle(items[i]).marginBottom || '0');
+          totalHeight += itemHeight + marginBottom;
+        }
+      }
+
+      // Add some padding for the gradient overlay
+      collapsedHeight.value = `${totalHeight}px`;
+    }
+  } else {
+    // If we don't have more than maxVisibleItems, just use the full height
+    collapsedHeight.value = `${contentRef.value.scrollHeight}px`;
+  }
+
+  // Apply the collapsed height if not expanded
+  if (!isExpanded.value) {
     contentRef.value.style.height = collapsedHeight.value;
   }
 };
@@ -59,13 +73,17 @@ const toggleExpand = () => {
   });
 };
 
-// Watch for content changes
-watch(() => processedHtml.value, updateHeight);
+// Watch for content changes and recalculate height
+watch(() => processedHtml.value, () => {
+  nextTick(() => {
+    calculateCollapsedHeight();
+  });
+});
 </script>
 
 <template>
   <div class="summary-information w-full mb-4">
-    <h5 class="heading-6 mb-4">
+    <h5 class="heading-5 md:heading-6 mb-4">
       مشخصات محصول
     </h5>
     <div class="brand-item flex items-center w-full">
@@ -120,16 +138,31 @@ watch(() => processedHtml.value, updateHeight);
       @apply leading-none pt-0.5 ml-2;
       content: url("data:image/svg+xml,%3Csvg width='18px' height='18px' viewBox='0 0 25 25' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M22.2667 13.6714C21.4855 17.5776 18.5402 21.2558 14.4074 22.0776C12.3917 22.4791 10.3008 22.2343 8.43237 21.3783C6.56392 20.5222 5.01318 19.0985 4.00095 17.3098C2.98872 15.5211 2.56661 13.4587 2.79472 11.4162C3.02283 9.37368 3.88954 7.45519 5.27143 5.9339C8.1058 2.81202 12.8917 1.95265 16.798 3.51515' stroke='%2342BD3F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M8.98584 12.1083L12.8921 16.0145L22.2671 5.85828' stroke='%2342BD3F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
     }
+
+    & strong {
+      @apply font-normal;
+    }
   }
 }
 
 .summary-content {
-  overflow: hidden;
+  @apply relative overflow-hidden;
   transition: height 0.3s ease-in-out;
-  height: 100px; /* Initial collapsed height */
+
+  &:after {
+    content: '';
+    display: block;
+    @apply absolute bottom-0 left-0 right-0 h-12;
+    @apply bg-gradient-to-t from-background to-transparent;
+    width: 100%;
+  }
 }
 
 .summary-content.is-expanded {
   height: auto;
+
+  &:after {
+    display: none;
+  }
 }
 </style>
