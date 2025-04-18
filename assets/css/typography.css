@@ -5,69 +5,6 @@
     --font-en-num: 'yekan-en'
 }
 
-/* 
-@layer base {
-
-    .heading-1 {
-        @apply font-fa-num text-4xl font-bold leading-tight;
-    }
-    .heading-2 {
-        @apply font-fa-num text-3xl font-bold leading-tight;
-    }
-    .heading-3 {
-        @apply font-fa-num text-2xl font-bold leading-tight;
-    }
-    .heading-4 {
-        @apply font-fa-num text-xl font-medium leading-tight;
-    }
-    .heading-5 {
-        @apply font-fa-num text-base font-medium leading-normal;
-    }
-
-    .body-1 {
-        @apply font-fa-num text-lg leading-normal;
-    }
-    .body-2 {
-        @apply font-fa-num text-base leading-normal;
-    }
-    .body-3 {
-        @apply font-fa-num text-sm leading-normal;
-    }
-    .body-4 {
-        @apply font-fa-num text-xs leading-normal;
-    }
-
-    .caption-1 {
-        @apply font-fa-num text-sm font-medium leading-normal;
-    }
-    .caption-2 {
-        @apply font-fa-num text-xs font-bold leading-normal;
-    }
-
-    .button-1{
-        @apply font-fa-num text-sm font-medium leading-none;
-    }
-
-    .button-3{
-        @apply font-fa-num text-xs font-medium leading-none;
-    }
-}
- */
-
-
-/* @import "tailwindcss";
-
-/**
- * Modern Fluid Typography System for Tailwind CSS 4
- * 
- * This file defines typography classes using CSS clamp() for smooth fluid sizing
- * across all viewport widths without breakpoint-specific definitions.
- * 
- * You can still use these classes with responsive prefixes like:
- * class="heading-4 md:heading-2 lg:heading-1" when needed.
- */
-
-
 @theme {
     /* Font families */
     --font-fa-num: 'yekan-fa';
@@ -79,7 +16,7 @@
     --screen-max: 1536px;
     /* 2XL breakpoint */
     /* Fluid Typography Scale using calc and clamp for automatic scaling */
-    --fluid-h1: clamp(1.4rem, 1.3rem + 2vw, 2rem);
+    --fluid-h1: clamp(1.38rem, 1.275rem + 1.9vw, 1.9rem);
     /* ~28px to 35px */
     --fluid-h2: clamp(1.35rem, 1.25rem + 1.8vw, 1.8rem);
     /* ~24px to 40px */
