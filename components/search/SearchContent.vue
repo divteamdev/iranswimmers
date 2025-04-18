@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { useSearchStore } from '~/stores/searchStore';
 import { computed, watch, onMounted } from 'vue';
-import ProductMiniCard from '~/components/product/card/mini.vue';
 import { useSearch } from '~/composables/useSearch';
 import { useRouter } from 'vue-router';
 
@@ -103,7 +102,7 @@ const navigateToFullSearch = () => {
     <div v-else-if="hasResults" class="py-2 overflow-y-auto max-h-[60vh]">
       <ul class="space-y-2">
         <li v-for="(product, index) in searchResults" :key="index">
-          <ProductMiniCard 
+          <ProductMiniCard
             :product="product" 
             @click="handleProductClick(product)"
           />
