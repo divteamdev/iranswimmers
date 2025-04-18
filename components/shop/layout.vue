@@ -68,6 +68,7 @@ const loadMoreProducts = () => {
 <template>
   <div class="irsm-container" dir="rtl">
     <Banner
+        v-if="useRoute().name === 'shop'"
         class="mb-8 hidden lg:block"
         variant="full-width"
         :src="banner.desktop"
@@ -75,6 +76,7 @@ const loadMoreProducts = () => {
     />
 
     <Banner
+        v-if="useRoute().name === 'shop'"
         class="mb-8 lg:hidden"
         variant="full-width"
         :src="banner.mobile"
