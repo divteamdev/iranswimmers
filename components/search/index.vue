@@ -11,6 +11,7 @@ import {
 import { Input } from '~/components/ui/input';
 import SearchContent from '~/components/search/SearchContent.vue';
 import { useRouter, useRoute } from 'vue-router';
+import {Underlay} from "~/components/ui/underlay";
 
 const router = useRouter();
 const route = useRoute();
@@ -30,7 +31,7 @@ const scrollPosition = ref(0);
 const removeHashAndCloseSearch = () => {
   if (typeof window !== 'undefined') {
 
-    
+
     closeSearch();
 
   }
@@ -174,15 +175,15 @@ onBeforeUnmount(() => {
 <template>
   <!-- Desktop search dropdown -->
   <div v-if="!isMobile && computedIsActive" ref="searchContainerRef"
-    class="absolute -top-2 -left-2 -right-2 z-50 bg-background border border-border border-t-0 rounded-b-lg shadow-lg p-2 max-h-[80vh]"
-    @click="stopPropagation">
+       class="absolute -top-2 -left-2 -right-2 z-50 bg-background border border-border border-t-0 rounded-b-lg shadow-lg p-2 max-h-[80vh]"
+       @click="stopPropagation">
 
     <div class="flex mb-4 relative" dir="rtl">
       <Input ref="desktopInputRef" v-model="searchQuery" placeholder="عبارت مورد نظر خود را وارد کنید..."
-        class="grow h-12 rounded-l-none rounded-r-xl bg-muted/50" autofocus @keydown.enter="navigateToSearchPage"
-        @keydown.esc="removeHashAndCloseSearch" />
+             class="grow h-12 rounded-l-none rounded-r-xl bg-muted/50" autofocus @keydown.enter="navigateToSearchPage"
+             @keydown.esc="removeHashAndCloseSearch" />
       <Button variant="default" :size="isMobile ? 'icon' : 'icon-lg'"
-        :class="['rounded-r-none h-10 w-10 md:h-12 md:w-12']" @click="onSearchButtonClick">
+              :class="['rounded-r-none h-10 w-10 md:h-12 md:w-12']" @click="onSearchButtonClick">
         <Icon name="hugeicons:search-01" class="text-primary-foreground text-2xl" />
       </Button>
     </div>
@@ -191,11 +192,11 @@ onBeforeUnmount(() => {
 
   </div>
 
-  <Under :show="computedIsActive" @click="removeHashAndCloseSearch" zIndex="19" />
+  <Underlay :show="computedIsActive" @click="removeHashAndCloseSearch" zIndex="19" />
 
   <!-- Mobile search sheet -->
   <Sheet :modal="false" @after-leave="restorePointerEvents" :open="computedIsActive && isMobile"
-    @after-enter="onSheetAfterEnter">
+         @after-enter="onSheetAfterEnter">
     <SheetContent side="bottom" class="h-full px-4 pt-6 pb-4 flex flex-col" @close="handleSheetClose">
       <SheetHeader>
         <SheetTitle>جستجو</SheetTitle>
@@ -203,8 +204,8 @@ onBeforeUnmount(() => {
 
       <div class="flex mb-4 relative" dir="rtl">
         <Input ref="mobileInputRef" v-model="searchQuery" placeholder="عبارت مورد نظر خود را وارد کنید..."
-          class="grow h-12 rounded-xl bg-muted" autofocus @keydown.enter="navigateToSearchPage"
-          @keydown.esc="removeHashAndCloseSearch" />
+               class="grow h-12 rounded-xl bg-muted" autofocus @keydown.enter="navigateToSearchPage"
+               @keydown.esc="removeHashAndCloseSearch" />
         <Icon name="hugeicons:search-01" class="text-primary text-2xl absolute left-2 top-1/2 -translate-y-1/2" />
       </div>
 

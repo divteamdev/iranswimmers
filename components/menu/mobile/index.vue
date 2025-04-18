@@ -2,7 +2,7 @@
 import { ref, watch, onUnmounted } from 'vue'
 import MenuTabs from './MenuTabs.vue'
 import MenuList from './MenuList.vue';
-import Underlay from '~/components/ui/Underlay.vue';
+import {Underlay} from "~/components/ui/underlay";
 
 interface Props {
     open: boolean

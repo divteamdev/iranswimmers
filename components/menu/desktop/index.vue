@@ -7,7 +7,7 @@ import SubMenu from './SubMenu.vue'
 import MenuContainer from './MenuContainer.vue'
 import NoDataFound from './NoDataFound.vue'
 import type { Category } from './types'
-import Underlay from "~/components/ui/Underlay.vue";
+import {Underlay} from "~/components/ui/underlay";
 
 const categoriesStore = useCategoriesStore()
 const mainCategories = ref<Category[]>([])
