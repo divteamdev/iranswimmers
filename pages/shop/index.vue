@@ -1,13 +1,13 @@
 <!-- pages/shop/index.vue -->
 <script setup lang="ts">
-import { useProductsStore } from '~/stores/productsStore';
-import { ref, onMounted, computed } from 'vue';
-import { useCategoriesStore } from "~/stores/shop/categoriesStore";
-import { useDeviceDetection } from "~/composables/useDeviceDetection";
+import {useProductsStore} from '~/stores/productsStore';
+import {ref, onMounted, computed} from 'vue';
+import {useCategoriesStore} from "~/stores/shop/categoriesStore";
+import {useDeviceDetection} from "~/composables/useDeviceDetection";
 
 const productsStore = useProductsStore();
 const categoriesStore = useCategoriesStore();
-const { isMobile } = useDeviceDetection();
+const {isMobile} = useDeviceDetection();
 const isLoading = ref(true);
 const parentCategoryId = 43;
 
@@ -15,8 +15,7 @@ const parentCategoryId = 43;
 onMounted(async () => {
   try {
     isLoading.value = true;
-    await categoriesStore.fetchMainCategories();
-    categoriesStore.setSelectedCategory(parentCategoryId, false);
+
     await productsStore.fetchProducts(1);
   } finally {
     isLoading.value = false;
