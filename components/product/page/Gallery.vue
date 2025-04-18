@@ -15,10 +15,18 @@ const emblaMainApi = ref<CarouselApi>()
 const emblaThumbnailApi = ref<CarouselApi>()
 const selectedIndex = ref(0)
 
-const props = withDefaults(defineProps<{
-  images: string[]
-}>(), {
-  images: []
+interface ProductImage {
+  variation_id?: number;
+  src: string;
+  alt: string;
+}
+
+defineProps({
+  images: {
+    type: Array as PropType<ProductImage[]>,
+    required: true,
+    default: () => []
+  }
 })
 
 function onSelect() {
@@ -45,7 +53,7 @@ watchOnce(emblaMainApi, (emblaMainApi) => {
 </script>
 
 <template>
-  <div class="w-full max-w-sm">
+  <div class="w-full h-fit md:max-w-xs lg:max-w-sm">
     <Carousel
         class="relative w-auto mb-4"
         :opts="{
@@ -57,8 +65,8 @@ watchOnce(emblaMainApi, (emblaMainApi) => {
     >
       <CarouselContent>
         <CarouselItem v-for="(image, index) in images" :key="index">
-          <div class="p-1 flex aspect-square items-center justify-center border border-border rounded-xl">
-            <img :src="convertImageUrl(image.src)" :alt="image.alt"/>
+          <div class="p-1 flex aspect-square items-center justify-center border border-border rounded-xl relative overflow-hidden">
+            <img :src="convertImageUrl(image.src)" :alt="image.alt" class="max-h-min absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"/>
           </div>
         </CarouselItem>
       </CarouselContent>
