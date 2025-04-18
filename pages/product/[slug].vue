@@ -151,7 +151,7 @@ const productSku = computed(() => {
     <div v-else-if="error">خطا در بارگذاری محصول</div>
     <div v-else class="product-page">
       <!-- Breadcrumbs and Actions -->
-      <div class="flex flex-col lg:flex-row items-center justify-between w-full mb-4 md:mb-8 border-b border-b-border">
+      <div class="flex flex-col lg:flex-row items-center justify-between w-full mb-4 md:mb-12 border-b border-b-border">
         <div class="irsm-container w-full pb-8">
           <BaseBreadcrumb :items="productStore.breadCrumb"/>
 
@@ -162,7 +162,7 @@ const productSku = computed(() => {
 
       </div>
 
-      <div class="flex flex-col md:flex-row w-full gap-4 mb-16 md:mb-8 irsm-container relative">
+      <div class="flex flex-col md:flex-row w-full gap-4 mb-16 md:mb-12 irsm-container relative">
         <!-- Product Gallery -->
         <ProductPageGallery
             class="md:sticky md:top-24"
@@ -314,7 +314,7 @@ const productSku = computed(() => {
       </div>
 
 
-      <section class="irsm-container mb-16 md:mb-8">
+      <section class="irsm-container mb-16 md:mb-12">
         <h2 class="heading-5 mb-4">توضیحات محصول</h2>
         <!-- Product Description -->
         <div class="prose max-w-none rounded-xl border border-border p-4 lg:p-8" v-if="productData.description">
