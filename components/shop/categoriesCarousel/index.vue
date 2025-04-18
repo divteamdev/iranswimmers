@@ -67,7 +67,7 @@ const loadMainCategory = async () => {
 // Initialize component
 onMounted(async () => {
   if (!categoriesStore.mainCategories.length) {
-    await categoriesStore.fetchMainCategories(3);
+    await categoriesStore.fetchMainCategories(0);
   }
 
   // Load both the requested category and the main fallback category
@@ -125,9 +125,9 @@ defineExpose({
             <img
                 :src="category.image || '/images/svg/shop-categories-icon/no-image-category.svg'"
                 :alt="category.name"
-                class="w-auto h-auto"
+                class="size-20 object-contain"
             />
-            <h6 class="body-4 text-card-foreground">
+            <h6 class="body-4 text-card-foreground whitespace-nowrap">
               {{ category.name }}
             </h6>
           </nuxt-link>
