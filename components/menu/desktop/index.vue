@@ -7,6 +7,7 @@ import SubMenu from './SubMenu.vue'
 import MenuContainer from './MenuContainer.vue'
 import NoDataFound from './NoDataFound.vue'
 import type { Category } from './types'
+import Underlay from "~/components/ui/Underlay.vue";
 
 const categoriesStore = useCategoriesStore()
 const mainCategories = ref<Category[]>([])
@@ -116,6 +117,7 @@ onMounted(async () => {
         </MenuContainer>
       </div>
     </transition>
+    <Underlay :show="isMenuVisible" @click="hideMenu" zIndex="19" />
   </div>
 </template>
 
