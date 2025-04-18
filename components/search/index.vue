@@ -8,7 +8,6 @@ import {
   SheetTitle,
 } from '~/components/ui/sheet';
 
-import Underlay from '../ui/Underlay.vue';
 import { Input } from '~/components/ui/input';
 import SearchContent from '~/components/search/SearchContent.vue';
 import { useRouter, useRoute } from 'vue-router';
@@ -192,7 +191,7 @@ onBeforeUnmount(() => {
 
   </div>
 
-  <Underlay :show="computedIsActive" @click="removeHashAndCloseSearch" zIndex="19" />
+  <Under :show="computedIsActive" @click="removeHashAndCloseSearch" zIndex="19" />
 
   <!-- Mobile search sheet -->
   <Sheet :modal="false" @after-leave="restorePointerEvents" :open="computedIsActive && isMobile"

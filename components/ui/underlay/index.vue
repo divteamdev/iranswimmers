@@ -27,10 +27,6 @@ const classes = computed(() => ({
   'opacity-0': !props.show,
 }));
 
-// For debugging
-watch(() => props.show, (newVal) => {
-  console.log('Underlay show prop changed to:', newVal);
-});
 </script>
 
 <template>
