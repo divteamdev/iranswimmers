@@ -5,6 +5,7 @@ import {useProductStore} from '~/stores/product';
 import {calculateDiscountPercentage} from '~/helpers/productUtils';
 import {convertImageUrl} from "~/helpers/imageUtils";
 import {formatPrice} from "~/helpers/priceUtils";
+import WebFeatures from "~/components/product/WebFeatures.vue";
 
 const route = useRoute();
 const slug = computed(() => route.params.slug as string);
@@ -117,7 +118,7 @@ const addToCart = () => {
 
       <div class="flex w-full gap-4 mb-8">
         <!-- Product Gallery -->
-        <ProductGallery :images="productStore.images" :main-image="productStore.mainImage"/>
+        <ProductPageGallery :images="productStore.images" :main-image="productStore.mainImage"/>
 
         <div class="grow flex justify-between p-8 border border-border rounded-xl h-auto">
           <div class="flex flex-col items-start justify-between">
@@ -224,22 +225,11 @@ const addToCart = () => {
               </div>
             </div>
           </div>
-
-          <!-- Product Features Table -->
-          <div v-if="productData.attributes && productData.attributes.length > 0">
-            <table class="border-collapse w-64">
-              <tbody>
-              <tr
-                  v-for="attr in productData.attributes"
-                  :key="attr.slug"
-                  class="border-b border-gray-100"
-              >
-                <td class="py-2 font-medium">{{ attr.type || attr.name }}:</td>
-                <td class="py-2">{{ attr.value || attr.slug }}</td>
-              </tr>
-              </tbody>
-            </table>
+          <div class="flex flex-col items-start justify-between max-w-sm">
+            <ProductSummary/>
+            <WebFeatures/>
           </div>
+
         </div>
       </div>
 
