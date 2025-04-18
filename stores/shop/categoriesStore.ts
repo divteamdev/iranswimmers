@@ -22,7 +22,7 @@ export const useCategoriesStore = defineStore('categoriesStore', () => {
     const error = ref<Error | null>(null);
     const responseStatus = ref<number>(200); // Default to 200, updated on successful responses
 
-    const fetchMainCategories = async (depth: 3) => {
+    const fetchMainCategories = async (depth: number = 0) => {
         isLoading.value = true;
         error.value = null;
 
