@@ -22,12 +22,8 @@ export const apiRequest = async <T = any>(
             error: null
         };
     } catch (error: any) {
-        console.error('API Request Error:', error);
-
-        toast({
-            title: "Error",
-            description: error.message || "An error occurred",
-            variant: 'destructive',
+        toast.error('error', {
+            description: "An error occurred",
         });
 
         return {
