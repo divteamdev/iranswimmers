@@ -68,10 +68,16 @@ const loadMoreProducts = () => {
 <template>
   <div class="irsm-container" dir="rtl">
     <Banner
-        v-if="banner.desktop || banner.mobile"
-        class="mb-8"
+        class="mb-8 hidden lg:block"
         variant="full-width"
-        :src="isMobile ? banner.mobile : banner.desktop"
+        :src="banner.desktop"
+        :alt="bannerAlt"
+    />
+
+    <Banner
+        class="mb-8 lg:hidden"
+        variant="full-width"
+        :src="banner.mobile"
         :alt="bannerAlt"
     />
 
