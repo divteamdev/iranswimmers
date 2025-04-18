@@ -102,7 +102,7 @@ const navigateToFullSearch = () => {
     <div v-else-if="hasResults" class="py-2 overflow-y-auto max-h-[60vh]">
       <ul class="space-y-2">
         <li v-for="(product, index) in searchResults" :key="index">
-          <ProductMiniCard
+          <ProductCardMini
             :product="product" 
             @click="handleProductClick(product)"
           />
