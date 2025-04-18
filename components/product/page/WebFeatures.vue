@@ -1,5 +1,5 @@
 <template>
-  <ul class="bg-card flex flex-row flex-wrap rounded-base h-auto p-4 gap-4 gap-y-4 rounded-lg">
+  <ul class="bg-card flex flex-row flex-wrap rounded-base h-auto p-4 gap-4 gap-y-4 rounded-lg w-full">
     <li class="flex flex-col gap-4 basis-[40%] flex-1 justify-center items-center" v-for="feature in finalFeatures" :key="feature.title">
       <i :class="feature.icon"/>
       <span class="text-center caption-2">
