@@ -67,8 +67,9 @@ const loadMoreProducts = () => {
 
 <template>
   <div class="irsm-container" dir="rtl">
+    <Skeleton v-if="useRoute().name === 'shop' && isLoading" class="hidden lg:block w-full h-auto min-h-[276px] mb-8 rounded-2xl"/>
     <Banner
-        v-if="useRoute().name === 'shop'"
+        v-if="useRoute().name === 'shop' && !isLoading"
         class="mb-8 hidden lg:block"
         variant="full-width"
         :src="banner.desktop"

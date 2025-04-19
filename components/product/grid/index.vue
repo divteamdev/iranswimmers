@@ -140,8 +140,12 @@ watch(() => props.hasMore, (newValue) => {
 <template>
   <div dir="rtl">
     <!-- Loading state (initial load) -->
-    <div v-if="isLoading && !displayProducts.length" class="flex justify-center py-12">
-      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+    <div v-if="isLoading && !displayProducts.length" class="flex justify-center">
+      <div class="grid w-full" :class="[gridClass, gap]">
+        <template v-for="i in 20" :key="i">
+          <skeleton class="min-h-[310px] md:min-h-[280px] lg:min-h-[340px] 2xl:min-w-[210px]"/>
+        </template>
+      </div>
     </div>
 
     <!-- Error state -->

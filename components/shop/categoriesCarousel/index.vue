@@ -60,7 +60,7 @@ const loadMainCategory = async () => {
 
   // If not found and we need to fetch it
   if (!mainCategory.value) {
-    mainCategory.value = await categoriesStore.findCategoryBySlug(mainParentSlug, false);
+    mainCategory.value = categoriesStore.findCategoryBySlug(mainParentSlug, false);
   }
 };
 
@@ -71,7 +71,7 @@ onMounted(async () => {
   }
 
   // Load both the requested category and the main fallback category
-  await categoriesStore.findCategoryBySlug(props.parentCategorySlug, true);
+  categoriesStore.findCategoryBySlug(props.parentCategorySlug, true);
   await loadMainCategory();
 
   isLoading.value = false;
@@ -80,7 +80,7 @@ onMounted(async () => {
 // Watch for slug changes
 watch(() => props.parentCategorySlug, async (newSlug) => {
   isLoading.value = true;
-  await categoriesStore.findCategoryBySlug(newSlug, true);
+  categoriesStore.findCategoryBySlug(newSlug, true);
   isLoading.value = false;
 });
 
@@ -110,7 +110,14 @@ defineExpose({
         }"
     >
       <CarouselContent class="h-full">
+        <CarouselItem v-if="isLoading" v-for="i in 10" class="px-4 basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/7 2xl:basis-1/8 border-l border-l-border last:border-l-0">
+          <div class="h-[120px] flex flex-col items-center justify-center gap-5 w-full">
+            <Skeleton class="size-20 rounded-full" />
+            <Skeleton class="w-20 h-4 rounded-2xl" />
+          </div>
+        </CarouselItem>
         <CarouselItem
+            v-else
             v-for="category in categories"
             :key="category.id"
             v-show="listType !== 'brands' || category.products_count > 0"
