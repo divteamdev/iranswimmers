@@ -17,6 +17,9 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  isLoading:{
+    type: Boolean,
+  },
   bannerMobile: {
     type: String,
     default: '/images/home-banners/banner-5-mobile.webp',
@@ -69,6 +72,7 @@ const shouldLoop = computed(() => !isXs.value);
       <ProductCarousel 
         :products="carousel.products" 
         :loop="shouldLoop"
+        :isLoading="isLoading"
         class="h-auto w-full -mr-[156px] md:mr-0 md:w-[74%] lg:w-[80%] 2xl:w-[85%]"
         carousel-item-class="basis-auto md:basis-[26.5%] lg:basis-[24.5%] xl:basis-[auto]" 
         :show-banner-slot="true"
