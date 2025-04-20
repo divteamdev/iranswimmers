@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import {computed, ref} from "vue";
 
 interface Carousel {
   title: string;
@@ -13,6 +13,7 @@ const props = defineProps<{
   sideBannerAlt?: string;
   bottomBannerSrc?: string;
   bottomBannerAlt?: string;
+  isLoading?: boolean;
 }>();
 
 // Set default values for optional props
@@ -21,7 +22,7 @@ const sideBannerAlt = computed(() => props.sideBannerAlt || 'On sale banner');
 const bottomBannerSrc = computed(() => props.bottomBannerSrc || '/images/home-banners/banner-1.webp');
 const bottomBannerAlt = computed(() => props.bottomBannerAlt || 'Secondary banner');
 
-const { isMobile } = useDeviceDetection();
+const {isMobile} = useDeviceDetection();
 
 // Reference to the carousel for navigation control
 const carouselRef = ref<any>(null);
@@ -37,32 +38,32 @@ const scrollPrev = () => {
 </script>
 
 <template>
-  <section v-if="carousel.products?.length" class="irsm-container mb-28" dir="rtl">
+  <section class="irsm-container mb-28" dir="rtl">
     <HomeSectionHeader title-class="heading-3 text-destructive" class="md:flex hidden" :title="carousel.title">
       <template #right-content>
         <!-- Carousel Navigation Buttons -->
         <div class="hidden md:flex gap-2 z-10">
           <Button variant="ghost" size="icon"
-            class="text-secondary bg-secondary/10 hover:bg-secondary/20 cursor-pointer"
-            @click="scrollPrev">
-            <Icon name="heroicons:arrow-right" class="text-lg" />
+                  class="text-secondary bg-secondary/10 hover:bg-secondary/20 cursor-pointer"
+                  @click="scrollPrev">
+            <Icon name="heroicons:arrow-right" class="text-lg"/>
             <span class="sr-only">Previous slide</span>
           </Button>
           <Button variant="ghost" size="icon"
-            class="text-secondary bg-secondary/10 hover:bg-secondary/20 cursor-pointer"
-            @click="scrollNext">
-            <Icon name="heroicons:arrow-left" class="text-lg" />
+                  class="text-secondary bg-secondary/10 hover:bg-secondary/20 cursor-pointer"
+                  @click="scrollNext">
+            <Icon name="heroicons:arrow-left" class="text-lg"/>
             <span class="sr-only">Next slide</span>
           </Button>
         </div>
       </template>
     </HomeSectionHeader>
 
-    <div class="flex flex-col lg:flex-row gap-4">
+    <div class="flex flex-col lg:flex-row gap-4 2xl:h-[706px]">
       <!-- Side Banner -->
-      <div class="lg:block hidden">
+      <div class="lg:block hidden max-w-[400px]">
         <Banner :src="sideBannerSrc" :alt="sideBannerAlt" variant="secondary" container-class="h-full w-full"
-          image-class="w-full h-full object-cover" />
+                image-class="w-full h-full object-cover"/>
       </div>
 
       <!-- Main content column -->
@@ -77,18 +78,19 @@ const scrollPrev = () => {
 
           <!-- Product carousel -->
           <ProductCarousel ref="carouselRef" :products="carousel.products"
-            :product-card-variant="isMobile ? 'default' : 'secondary'" dir="rtl" :loop="false"
-            :show-banner-slot="isMobile" class="h-full w-full -mr-[160px] md:mr-0"
-            carousel-item-class="basis-auto" :show-end-item="true">
+                           :is-loading="isLoading"
+                           :product-card-variant="isMobile ? 'default' : 'secondary'" dir="rtl" :loop="false"
+                           :show-banner-slot="isMobile" class="h-full w-full -mr-[160px] md:mr-0"
+                           carousel-item-class="basis-auto" :show-end-item="true">
             <template #banner-placeholder>
               <div class="min-w-[140px] h-full pointer-events-none md:hidden"></div>
             </template>
             <template #end-item>
               <Card :to="carousel.all"
-                class="h-full flex items-center justify-center bg-secondary/10 hover:bg-secondary/15 transition-colors duration-300">
+                    class="h-full flex items-center justify-center bg-secondary/10 hover:bg-secondary/15 transition-colors duration-300">
                 <span class="body-2 flex items-center gap-2 text-background md:text-secondary">
                   مشاهده همه
-                  <Icon name="heroicons:arrow-left" class="text-background md:text-secondary text-lg" />
+                  <Icon name="heroicons:arrow-left" class="text-background md:text-secondary text-lg"/>
                 </span>
               </Card>
             </template>
@@ -97,7 +99,7 @@ const scrollPrev = () => {
 
         <!-- Bottom Banner -->
         <Banner :src="bottomBannerSrc" :alt="bottomBannerAlt" variant="full-width" container-class="h-full"
-          image-class="w-full h-full object-contain" />
+                image-class="w-full h-full object-contain"/>
       </div>
     </div>
   </section>
