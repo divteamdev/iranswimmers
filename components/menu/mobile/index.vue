@@ -33,10 +33,12 @@ onUnmounted(() => {
     if (typeof window === 'undefined') return
     document.body.style.overflow = ''
 })
+
+const {isMobile} = useDeviceDetection()
 </script>
 
 <template>
-    <teleport to="body">
+    <teleport to="body" v-if="isMobile">
         <div class="h-screen fixed top-0 right-0 z-[52]" :class="{ 'pointer-events-none': !open }">
 
             <div class="fixed top-0 right-0 z-50 w-full max-w-xs bg-background shadow-lg transition-transform duration-300 ease-in-out h-screen"
