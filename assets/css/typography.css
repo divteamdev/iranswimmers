@@ -37,7 +37,8 @@
     /* ~14px to 15px */
     --fluid-body-4: clamp(0.8rem, 0.7rem + 0.25vw, 0.825rem);
     /* ~12px to 13px */
-    --fluid-body-5: clamp(0.7rem, 0.6rem + 0.2vw, 0.75rem);
+    --fluid-body-5: clamp(0.65rem, 0.5rem + 0.18vw, 0.72rem);
+    /* ~10px to 12px */
     /* Display Text */
     --fluid-display-1: clamp(2.5rem, 1.2rem + 6.5vw, 5rem);
     /* ~40px to 80px */
@@ -300,7 +301,7 @@
     /* Captions */
     .caption-1 {
         font-family: var(--font-fa-num);
-        font-size: var(--fluid-body-3);
+        font-size: var(--fluid-body-4);
         font-weight: 500;
         line-height: 1.4;
     }
@@ -308,7 +309,7 @@
     .caption-2 {
         font-family: var(--font-fa-num);
         font-size: var(--fluid-body-5);
-        font-weight: 500;
+        font-weight: 400;
         line-height: 1.4;
     }
 
