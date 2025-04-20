@@ -140,7 +140,7 @@
         @apply bg-background text-foreground;
     }
 
-    .container-padding{
+    .container-padding {
         @apply px-4 sm:px-6 lg:px-8 xl:px-0;
     }
 
@@ -164,4 +164,34 @@
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
         }
     }
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: var(--muted-foreground);
+    opacity: 80%;
+}
+
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: var(--muted-foreground);
+    opacity: 80%;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: var(--muted-foreground);
+    opacity: 80%;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: var(--muted-foreground);
+    opacity: 80%;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: var(--muted-foreground);
+    opacity: 80%;
+}
+
+::placeholder { /* Most modern browsers support this now. */
+    color: var(--muted-foreground);
+    opacity: 80%;
 }
