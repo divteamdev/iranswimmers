@@ -11,6 +11,9 @@ const props = defineProps({
     default: 'primary', // 'primary' for top banner, 'secondary' for right banner
     validator: (value: string) => ['primary', 'secondary'].includes(value)
   },
+  isLoading:{
+    type: Boolean,
+  },
   banner: {
     type: String,
     default: '/images/home-banners/banner-5.webp',
@@ -77,6 +80,7 @@ const isPrimary = computed(() => props.variant === 'primary');
           </div>
 
           <ProductCarousel
+              :isLoading="isLoading"
               :products="carousel.products"
               class="flex gap-4 md:gap-0 md:flex-col -ml-4 -mr-4 sm:-ml-6 sm:-mr-6 md:-ml-10 md:-mr-0"
               carousel-item-class="basis-auto">
@@ -110,6 +114,7 @@ const isPrimary = computed(() => props.variant === 'primary');
             
         <div class="flex gap-4 md:gap-0 md:flex-col md:pr-10 -ml-4 -mr-4 sm:-ml-6 sm:-mr-6 md:-ml-0 md:-mr-0">
           <ProductCarousel
+              :isLoading="isLoading"
               :products="carousel.products"
               class="h-auto w-full"
               carousel-item-class="basis-auto">
