@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import {ref, computed} from 'vue';
 
 interface ProductTab {
   id: string;
@@ -15,13 +15,16 @@ const props = defineProps({
     default: () => [],
     validator: (value: ProductTab[]) => {
       return value.every(tab =>
-        tab.id &&
-        tab.title &&
-        tab.products &&
-        Array.isArray(tab.products) &&
-        tab.all !== undefined
+          tab.id &&
+          tab.title &&
+          tab.products &&
+          Array.isArray(tab.products) &&
+          tab.all !== undefined
       );
     }
+  },
+  isLoading: {
+    type: Boolean,
   },
   banner: {
     type: String,
@@ -61,7 +64,7 @@ const handleBannerLoaded = (): void => {
   isBannerLoaded.value = true;
 };
 
-const { isMobile } = useDeviceDetection();
+const {isMobile} = useDeviceDetection();
 </script>
 
 <template>
@@ -70,11 +73,10 @@ const { isMobile } = useDeviceDetection();
     <div class="flex gap-4 h-auto md:max-h-full">
 
       <div class="w-full h-auto hidden md:block">
-      <!-- Banner Image -->
-      <Banner :src="banner" :alt="bannerAlt" variant="primary" container-class="w-full h-full"
-        image-class="w-full h-full object-cover" />
+        <!-- Banner Image -->
+        <Banner :src="banner" :alt="bannerAlt" variant="primary" container-class="w-full h-full"
+                image-class="w-full h-full object-cover"/>
       </div>
-
 
 
       <!-- Tab Content -->
@@ -86,7 +88,7 @@ const { isMobile } = useDeviceDetection();
               <Button size="sm" :variant="activeTabId === tab.id ? 'default' : 'ghost'" @click="setActiveTab(tab.id)">
                 {{ tab.title }}
               </Button>
-              <span v-if="index < tabs.length - 1" class="h-5 w-[1px] bg-border" />
+              <span v-if="index < tabs.length - 1" class="h-5 w-[1px] bg-border"/>
             </template>
           </div>
 
@@ -94,7 +96,7 @@ const { isMobile } = useDeviceDetection();
             <h3 class="heading-6 md:hidden">{{ getActiveTitle }}</h3>
             <Button v-if="getActiveTab?.all" variant="link" :to="getActiveTab.all" class="pl-0" size="sm">
               مشاهده همه {{ getActiveTitle }}
-              <Icon name="heroicons:arrow-left" class="ms-1" />
+              <Icon name="heroicons:arrow-left" class="ms-1"/>
             </Button>
           </div>
 
@@ -103,12 +105,14 @@ const { isMobile } = useDeviceDetection();
 
         <!-- Active Tab Carousel -->
         <template v-if="getActiveTab">
-          <ProductCarousel :products="getActiveTab.products" :loop="false" class="min-h-[310px] h-full"
-            carousel-item-class="basis-auto md:basis-[26.5%] lg:basis-[24.5%] xl:basis-[auto]">
+          <ProductCarousel
+              :isLoading="isLoading"
+              :products="getActiveTab.products" :loop="false" class="min-h-[310px] h-full"
+              carousel-item-class="basis-auto md:basis-[26.5%] lg:basis-[24.5%] xl:basis-[auto]">
             <template v-if="isMobile" #banner-placeholder>
               <Banner :src="bannerMobile" :alt="bannerMobileAlt" variant="primary"
-                container-class="w-full h-full basis-auto min-w-[140px] ml-4"
-                image-class="w-full h-full object-cover" />
+                      container-class="w-full h-full basis-auto min-w-[140px] ml-4"
+                      image-class="w-full h-full object-cover"/>
             </template>
           </ProductCarousel>
         </template>
