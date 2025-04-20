@@ -47,7 +47,7 @@ const {isMobile} = useDeviceDetection()
                     <div class="flex items-center px-2 py-4 border-b border-border gap-2">
                         <Button variant="ghost" size="icon" @click="handleClose" aria-label="Close menu">
                             <Icon name="hugeicons:arrow-right-01" class="text-xl" />
-                        </button>
+                        </Button>
 
                         <h2 class="heading-5">منو</h2>
                     </div>
