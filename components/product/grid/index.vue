@@ -139,12 +139,10 @@ watch(() => props.hasMore, (newValue) => {
 
 <template>
   <div dir="rtl">
-    <!-- Loading state (initial load) -->
+    <!-- Loading state (initial load)  -->
     <div v-if="isLoading && !displayProducts.length" class="flex justify-center">
       <div class="grid w-full" :class="[gridClass, gap]">
-        <template v-for="i in 20" :key="i">
-          <skeleton class="min-h-[310px] md:min-h-[280px] lg:min-h-[340px] 2xl:min-w-[210px]"/>
-        </template>
+        <ProductCardSkeleton v-for="i in 20" :key="i"/>
       </div>
     </div>
 

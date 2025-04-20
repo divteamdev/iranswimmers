@@ -26,14 +26,14 @@ const cardVariants = computed(() => {
   switch (props.variant) {
     case 'secondary':
       return {
-        card: 'bg-secondary',
+        card: 'bg-secondary hover:bg-[#FF870DFF]',
         title: 'text-secondary-foreground',
         price: 'text-secondary-foreground',
         currency: 'text-secondary-foreground/80'
       }
     case 'accent':
       return {
-        card: 'bg-primary/20',
+        card: 'bg-primary/20 hover:bg-primary/25',
         title: 'text-primary',
         price: 'text-foreground',
         currency: 'text-foreground/80'
@@ -41,7 +41,7 @@ const cardVariants = computed(() => {
     case 'default':
     default:
       return {
-        card: '',
+        card: 'hover:bg-card-hover',
         title: '',
         price: 'text-foreground',
         currency: 'text-muted-foreground'
@@ -53,7 +53,7 @@ const cardVariants = computed(() => {
 <template>
   <Card
       dir="rtl"
-      class="justify-between min-h-[310px] md:min-h-[280px] lg:min-h-[340px] 2xl:min-w-[210px] hover:bg-card-hover transition-colors duration-300"
+      class="justify-between min-h-[310px] md:min-h-[280px] lg:min-h-[340px] 2xl:min-w-[210px] transition-colors duration-300"
       :class="cardVariants.card"
       :to="`/product/${product.slug}`">
     <CardHeader>

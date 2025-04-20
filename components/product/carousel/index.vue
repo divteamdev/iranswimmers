@@ -14,6 +14,10 @@ const props = defineProps({
     type: String,
     default: 'default'
   },
+  isLoading: {
+    type: Boolean,
+    default: false,
+  },
   carouselItemClass: {
     type: String,
     default: 'pl-4 md:basis-1/2 lg:basis-1/5 xl:basis-1/6 min-h-[400px]'
@@ -80,9 +84,11 @@ defineExpose({
         >
           <slot name="banner-placeholder"></slot>
         </CarouselItem>
-        
-
-        <CarouselItem v-for="(product, index) in products"
+        <CarouselItem v-if="isLoading" v-for="i in 10" :key="i"
+                      :class="carouselItemClass + ' max-w-[300px] min-w-[200px] md:min-w-[220px] w-auto'">
+          <ProductCardSkeleton class="h-full"/>
+        </CarouselItem>
+        <CarouselItem v-else v-for="(product, index) in products"
                       :key="index"
                       :class="carouselItemClass + ' max-w-[300px] min-w-[200px] md:min-w-[220px] w-auto'">
           <ProductCard

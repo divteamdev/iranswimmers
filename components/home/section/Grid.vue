@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, onMounted, onBeforeUnmount, ref } from 'vue';
-import { useHomeStore } from "~/stores/homeStore";
+import {computed, onMounted, onBeforeUnmount, ref} from 'vue';
+import {useHomeStore} from "~/stores/homeStore";
 
 const homeStore = useHomeStore();
 
@@ -26,9 +26,12 @@ const props = defineProps({
       all: '',
     }),
   },
+  isLoading: {
+    type: Boolean,
+  },
   maxProducts2Xl: {
     type: Number,
-    default: 12
+    default: 10
   },
   maxProductsXl: {
     type: Number,
@@ -90,6 +93,25 @@ const limitedProducts = computed(() => {
     return products.slice(0, 4);
   }
 });
+
+const limitedProductsCount = computed(() => {
+  const products = props.grid?.products || [];
+  const width = windowWidth.value;
+
+  if (width >= 1536) { // 2xl breakpoint
+    return props.maxProducts2Xl;
+  } else if (width >= 1280) { // xl breakpoint
+    return props.maxProductsXl;
+  } else if (width >= 1024) { // lg breakpoint
+    return props.maxProductsLg;
+  } else if (width >= 768) { // md breakpoint
+    return props.maxProductsMd;
+  } else if (width >= 640) { // sm breakpoint
+    return props.maxProductsSm;
+  } else { // xs breakpoint
+    return 4;
+  }
+});
 </script>
 
 <template>
@@ -98,9 +120,9 @@ const limitedProducts = computed(() => {
     <div class="flex gap-4 md:min-h-[738px] relative">
       <!-- Banner Image -->
       <Banner class="hidden md:block"
-        container-class="relative ml-4 bg-primary rounded-3xl overflow-visible sm:basis-[40%] md:basis-[35%] lg:basis-[25%] xl:basis-[20%] 2xl:basis-[21%]"
-        image-class="w-full h-full max-h-[90%] absolute bottom-0 right-0 object-cover rounded-3xl -ml-4 scale-105 origin-bottom-right z-0 pointer-events-none"
-        :src="banner" :alt="bannerAlt" variant="custom">
+              container-class="relative ml-4 bg-primary rounded-3xl overflow-visible sm:basis-[40%] md:basis-[35%] lg:basis-[25%] xl:basis-[20%] 2xl:basis-[21%]"
+              image-class="w-full h-full max-h-[90%] absolute bottom-0 right-0 object-cover rounded-3xl -ml-4 scale-105 origin-bottom-right z-0 pointer-events-none"
+              :src="banner" :alt="bannerAlt" variant="custom">
         <div class="absolute top-0 left-0 w-full px-4 py-10 z-10 flex flex-col">
           <h5 class="heading-4 font-bold text-background font-fa-num mb-2 -tracking-[1px] text-nowrap">
             تا 30% تخفیف
@@ -109,40 +131,43 @@ const limitedProducts = computed(() => {
             {{ grid.title }}
           </span>
           <Button variant="default" class="bg-background text-primary hover:bg-background/95 w-fit" size="sm"
-            :to="grid.all">
+                  :to="grid.all">
             <span class="hidden md:block">مشاهده همه محصولات</span>
             <span class="block md:hidden">مشاهده همه</span>
           </Button>
         </div>
 
         <div
-          class="absolute -left-[25px] top-1/2 -translate-y-1/2 -z-10 flex items-center justify-center py-4">
+            class="absolute -left-[25px] top-1/2 -translate-y-1/2 -z-10 flex items-center justify-center py-4">
           <svg width="31" height="133" viewBox="0 0 31 133" fill="none" xmlns="http://www.w3.org/2000/svg"
-            class="fill-primary">
+               class="fill-primary">
             <path
-              d="M30.5 0.318359C30.5 0.318359 0.0878906 51.8181 0.0878906 66.409C0.0878906 81 30.5 132.5 30.5 132.5V0.318359Z" />
+                d="M30.5 0.318359C30.5 0.318359 0.0878906 51.8181 0.0878906 66.409C0.0878906 81 30.5 132.5 30.5 132.5V0.318359Z"/>
             <path d="M20.1429 49L18.718 51.1392C12.9292 59.8301 13.4243 71.2666 19.9425 79.4248L22 82" stroke="white"
-              stroke-width="3" stroke-linecap="round" />
+                  stroke-width="3" stroke-linecap="round"/>
           </svg>
 
         </div>
       </Banner>
 
 
-
       <div class="products-grid w-full hidden md:grid">
-        <ProductCard v-for="product in limitedProducts" :key="product.id" variant="accent" :product="product"
-          class="h-auto" />
+        <template v-if="isLoading" v-for="i in limitedProductsCount">
+          <ProductCardSkeleton class="h-auto"/>
+        </template>
+        <ProductCard v-else v-for="product in limitedProducts" :key="product.id" variant="accent" :product="product"
+                     class="h-auto"/>
       </div>
 
       <ProductCarousel :products="grid.products" class="h-auto w-full md:hidden"
-      product-card-variant="accent"
-        carousel-item-class="basis-auto md:basis-[26.5%] lg:basis-[24.5%] xl:basis-auto" 
-        :show-banner-slot="bannerMobile ? true : false"
-         :loop="false">
+                       :isLoading="isLoading"
+                       product-card-variant="accent"
+                       carousel-item-class="basis-auto md:basis-[26.5%] lg:basis-[24.5%] xl:basis-auto"
+                       :show-banner-slot="bannerMobile ? true : false"
+                       :loop="false">
         <template v-if="bannerMobile" #banner-placeholder>
           <Banner container-class="w-full h-full" image-class="object-cover" :src="bannerMobile" :alt="bannerMobileAlt"
-            variant="primary" />
+                  variant="primary"/>
         </template>
       </ProductCarousel>
 

@@ -1,5 +1,5 @@
 <script setup>
-import { HomeSectionSpecialProducts } from '#components';
+import {HomeSectionSpecialProducts} from '#components';
 import {useHomeStore} from '~/stores/homeStore';
 
 const homeStore = useHomeStore();
@@ -33,31 +33,44 @@ const productTabs = computed(() => [
 <template>
   <div>
     <section class="irsm-container mb-24">
-      <HomeSlider dir="rtl"/>
+      <HomeSlider dir="rtl" :isLoading="homeStore.isLoading"/>
     </section>
     <section class="irsm-container mb-24">
-      <HomeCategories/>
+      <HomeCategories :is-loading="homeStore.isLoading" />
     </section>
 
-    <home-section-on-sale :carousel="homeStore.onSaleCarousel"/>
+    <home-section-on-sale
+        :is-loading="homeStore.isLoading"
+        :carousel="homeStore.onSaleCarousel"/>
 
 
-     <HomeSectionSpecialProducts :carousel="homeStore.carousel1" banner="/images/home-banners/swim-glasses.webp" variant="primary"/>
+    <HomeSectionSpecialProducts :carousel="homeStore.carousel1" :isLoading="homeStore.isLoading"
+                                banner="/images/home-banners/swim-glasses.webp" variant="primary"/>
 
     <HomeSectionTabProducts
         :tabs="productTabs"
+        :isLoading="homeStore.isLoading"
         banner="/images/home-banners/banner-5.webp"
-        banner-alt="محصولات جدید" />
+        banner-alt="محصولات جدید"/>
 
-    <HomeSectionBannerOnRight :carousel="homeStore.carousel5"
-    banner-mobile="/images/home-banners/banner-6-mobile.webp"
-    banner="/images/home-banners/banner-6.webp"/>
+    <HomeSectionBannerOnRight
+        :isLoading="homeStore.isLoading"
+        :carousel="homeStore.carousel5"
+        banner-mobile="/images/home-banners/banner-6-mobile.webp"
+        banner="/images/home-banners/banner-6.webp"/>
 
-    <HomeSectionSpecialProducts :carousel="homeStore.carousel5" banner="/images/home-banners/image-on-right.webp" variant="secondary"/>
+    <HomeSectionSpecialProducts
+        :isLoading="homeStore.isLoading"
+        :carousel="homeStore.carousel5" banner="/images/home-banners/image-on-right.webp"
+        variant="secondary"/>
 
-    <HomeSectionBannerOnRight :carousel="homeStore.carousel2" banner="/images/home-banners/banner-9.webp"/>
+    <HomeSectionBannerOnRight
+        :isLoading="homeStore.isLoading"
+        :carousel="homeStore.carousel2" banner="/images/home-banners/banner-9.webp"/>
 
-    <HomeSectionGrid :grid="homeStore.carousel2" banner="/images/home-banners/grid-banner.webp"/>
+    <HomeSectionGrid
+        :isLoading="homeStore.isLoading"
+        :grid="homeStore.carousel2" banner="/images/home-banners/grid-banner.webp"/>
   </div>
 
 </template>
