@@ -92,6 +92,15 @@ const banners = [
 
 
 // Preload banner images
+const preloadImages = () => {
+  if (process.client) {
+    banners.forEach(banner => {
+      const img = new Image();
+      img.src = banner.src;
+    });
+  }
+};
+
 const { imagesLoaded } = useImagePreloader(() =>
         banners.flatMap(banner => [
           { src: banner.src, width: banner.width, height: banner.height },
@@ -99,6 +108,10 @@ const { imagesLoaded } = useImagePreloader(() =>
         ]),
     { timeout: 3000 }
 );
+
+onMounted(() => {
+  preloadImages();
+});
 </script>
 
 <template>
@@ -125,6 +138,7 @@ const { imagesLoaded } = useImagePreloader(() =>
             <CardContent class="flex items-center justify-center px-0 rounded-4xl overflow-hidden h-auto lg:aspect-[2.2/1]">
               <img :src="banner.src" :alt="banner.alt"
                    :width="banner.width" :height="banner.height"
+                   loading="eager" fetchpriority="high"
                    class="h-full w-full object-cover hidden md:block"/>
               <img :src="banner.mobile" :alt="banner.alt"
                    :width="banner.mobileWidth" :height="banner.mobileHeight"
