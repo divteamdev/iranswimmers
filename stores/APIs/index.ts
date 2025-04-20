@@ -39,7 +39,7 @@ export const useApiStore = defineStore('apiStore', () => {
         },
         auth: {
             otp: {
-                request: () => `${API_PATH.value}auth/otp/request`,
+                request: () => `${API_PATH.value}auth/otp`,
                 verify: () => `${API_PATH.value}auth/otp/verify`,
             },
             password: {
